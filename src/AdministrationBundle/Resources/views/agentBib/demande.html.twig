@@ -13,74 +13,61 @@
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="box box-success">
                 <div class="box-header">
-                    <h3 class="box-title">Liste des demandes</h3>
+                    <h3 class="box-title">Recherche une information</h3>
                 </div>
-                <!-- /.box-header -->
                 <div class="box-body">
-                    <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                        <div class="row">
-                            <div class="col-sm-6"></div>
-                            <div class="col-sm-6"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <table id="example2" class="table table-bordered table-hover dataTable" role="grid"
-                                       aria-describedby="example2_info">
-                                    <thead>
-                                    <tr role="row">
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">nom
-                                        </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">Prenom
-                                        </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">Activite
-                                        </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">Email
-                                        </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">Tel
-                                        </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">
-                                            Organization
-                                        </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">Type
-                                        </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">Visite
-                                        </th>
-                                    </thead>
-                                    <tbody>
-                                    <tr role="row" class="even">
-                                        <td>Epiphany 2.20</td>
-                                        <td>Gnome</td>
-                                        <td>1.8</td>
-                                        <td>A</td>
-                                        <td>Epiphany 2.20</td>
-                                        <td>Gnome</td>
-                                        <td>1.8</td>
-                                        <td>A</td>
-                                    </tr>
-                                    </tbody>
-                                    {#<tfoot>#}
-                                    {#<tr><th rowspan="1" colspan="1">Rendering engine</th><th rowspan="1" colspan="1">Browser</th><th rowspan="1" colspan="1">Platform(s)</th><th rowspan="1" colspan="1">Engine version</th><th rowspan="1" colspan="1">CSS grade</th></tr>#}
-                                    {#</tfoot>#}
-                                </table>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="titre">Titre</label>
+                                <input type="text" class="form-control" name="titre" id="titre"
+                                       placeholder="Entrer titre">
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="cle">Mot cle</label>
+                                <input type="text" class="form-control" name="cle" id="cle"
+                                       placeholder="Entrer mote cle">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="etat">Etat</label>
+                                <select name="etat" id="etat" class="form-control">
+                                    <option value="service">
+                                        Service
+                                    </option>
+                                    <option value="produit">
+                                        Produit
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group text-center">
+                                <label>
+                                    <input type="checkbox" name="indexation" class="flat-red">
+                                    Indexation
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <div class="form-group text-center">
+                                <label>
+                                    <input type="checkbox" name="localisation" class="flat-red">
+                                    Localisation
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="submit" value="Valder" class="btn  btn-success btn-lg btn-block">
                         </div>
                     </div>
                 </div>
@@ -88,23 +75,14 @@
             </div>
             <!-- /.box -->
         </div>
-        <!-- /.col -->
     </div>
-    <!-- /.row -->
+    <div class="row" id="result"></div>
 </section>
 
-{% block js %}
-    <script>
-        $(function () {
-            $('#example1').DataTable();
-            $('#example2').DataTable({
-                'paging': true,
-                'lengthChange': false,
-                'searching': false,
-                'ordering': true,
-                'info': true,
-                'autoWidth': false
-            })
-        })
-    </script>
-{% endblock %}
+<script>
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+        checkboxClass: 'icheckbox_flat-green'
+        ,
+        radioClass: 'iradio_flat-green'
+    })
+</script>

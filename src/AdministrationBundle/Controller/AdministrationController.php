@@ -2,9 +2,9 @@
 
 namespace AdministrationBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class AdministrationController extends Controller
 {
@@ -21,11 +21,26 @@ class AdministrationController extends Controller
     }
 
     /**
+     * @Route("/demandeur")
+     */
+    public function demandeurAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $demandeur = $em->getRepository('AdministrationBundle:seekersBib')->findAll();
+
+        return $this->render('@Administration/agentBib/demandeur.html.twig', ['demandeur' => $demandeur]);
+
+    }
+
+    /**
      * @Route("/demande")
      */
     public function demandeAction(Request $request)
     {
-        return $this->render('@Administration/agentBib/demande.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $demande = $em->getRepository('AdministrationBundle:seekersBib')->findAll();
+
+        return $this->render('@Administration/agentBib/demande.html.twig', ['demands' => $demande]);
 
     }
 

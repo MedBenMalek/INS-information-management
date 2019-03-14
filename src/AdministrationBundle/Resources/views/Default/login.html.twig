@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Gestion Demande | Log in</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+   
+    <!-- Font Awesome Icons -->
+    <link href="{{ asset('Ipi/font-awesome-4.3.0/css/font-awesome.css') }}" rel="stylesheet" type="text/css" />
+  
+     <link href="{{ asset('Ipi/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('Ipi/bootstrap/css/theme.bootstrap.css') }}" rel="stylesheet">
+
+  <!-- Theme style -->
+  <link href="{{ asset('Ipi/dist/css/AdminLTE.min.css') }}" rel="stylesheet">
+  
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link href="{{ asset('Ipi/dist/css/skins/_all-skins.min.css') }}" rel="stylesheet">
+  
+   <link href="{{ asset('Ipi/dist/css/jquery.appendGrid-1.6.2.css') }}" rel="stylesheet">
+ 
+  <!--  pager  -->
+  <link href="{{ asset('Ipi/pager/jquery.tablesorter.pager.css') }}" rel="stylesheet" type="text/css" />
+  
+
+  </head>
+  <body class="login-page">
+    <div class="login-box">
+      <div class="login-logo">
+        <a href="../../index2.html"><b>Authentification</b><br>Demande Information</a>
+      </div><!-- /.login-logo -->
+      <div class="login-box-body">
+        <p class="login-box-msg">Veuillez saisir votre login et votre  mot de passe </p>
+        <form action="login" method="post">
+          <div class="form-group has-feedback">
+            <input type="text" name="login" id="login" class="form-control" placeholder="Login"/>
+            
+          </div>
+          <div class="form-group has-feedback">
+            <input type="password" name="password" id="password" class="form-control" placeholder="Password"/>
+          </div>
+          <div class="row">
+            <div id="result" class="col-xs-8">    
+                                     
+            </div><!-- /.col -->
+            <div class="col-xs-4">
+              <button type="submit" id="valider" class="btn btn-primary btn-block btn-flat">Valider</button>
+            </div><!-- /.col -->
+          </div>
+        </form>
+
+      </div><!-- /.login-box-body -->
+    </div><!-- /.login-box -->
+
+<!-- jQuery 2.2.0 -->
+<script type="text/javascript" src="{{ asset('Ipi/plugins/jQuery/jQuery-2.2.0.min.js') }}"></script>
+<!-- Bootstrap 3.3.6 -->
+
+
+<script type="text/javascript" src="{{ asset('Ipi/bootstrap/js/bootstrap.min.js') }}"></script>
+    
+  </body>
+</html>

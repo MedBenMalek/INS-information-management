@@ -1,0 +1,34 @@
+<div id="cb-content" class="wrap clearfix">
+    <div class="cb-post-wrap cb-wrap-pad wrap clearfix>">
+        <div class="paddingconent cb-main">
+            <h2 class="custom-title login-title">Se connecter<hr></h2>
+
+            {% if error %}
+                <p style="color: #f00; text-align: center;">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+            {% endif %}
+            <form id="form-login" class="form-login" role="form" method="post" action="{{ path("fos_user_security_check") }}">
+                {% if csrf_token %}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                {% endif %}
+                <div class="form-group">
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="Pseudo" class="input-lg form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control input-lg" name="_password" placeholder="Mot de passe" required>
+                </div>
+                {#<div class="col-md-12 no-padding">#}
+                    {#<div class="checkbox ">#}
+                        {#<input type="checkbox" name="_remember_me" id="remember_me">#}
+                        {#<label for="remember_me">Se souvenir de moi</label>#}
+                    {#</div>#}
+                {#</div>#}
+                <div class="group-button" style="text-align: right">
+                    <button type="submit" class="btn btn-custom btn-custom-black">Se connecter</button>
+                </div>
+            </form>
+            <div class="col-md-12 text-center bottom-login">
+                <a href="{{ path('fos_user_resetting_request') }}" class="text-danger">Mot de passe oublié ?</a> | <a href="{{ path('fos_user_registration_register') }}" class="text-danger">S'inscrire</a>
+            </div>
+        </div>
+    </div>
+</div>

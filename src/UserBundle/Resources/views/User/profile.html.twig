@@ -1,0 +1,188 @@
+{% extends "::base.html.twig" %}
+{% set title = title %}
+{% set header = header %}
+
+{% block body %}
+    <div id="cb-content" class="wrap clearfix">
+        <div class="cb-post-wrap cb-wrap-pad wrap clearfix>">
+            <div class="paddingconent cb-main">
+                <h2 class="custom-title login-title">Mon profil</h2>
+                <div class="clearfix">
+                    <a href="{{ path('sf_project_index') }}" class="btn btn-danger btn-custom pull-right">Voir mes projets</a>
+                </div>
+                {{ form_start(form, {'attr': {'role': 'form', 'id': 'register-form'}}) }}
+
+                <div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.firstname, {attr: {class: 'form-control form-control-custom', placeholder: 'Nom'}}) }}
+                                {{ form_errors(form.firstname) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.lastname, {attr: {class: 'form-control form-control-custom', placeholder: 'Prénom'}}) }}
+                                {{ form_errors(form.lastname) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.born_at, {attr: {class: 'form-control form-control-custom datepicker-here', placeholder: 'Date de naissance', 'data-language': 'fr', 'data-date-format': 'dd/mm/yyyy'}}) }}
+                                {{ form_errors(form.born_at) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.email, {attr: {class: 'form-control form-control-custom', placeholder: 'Adresse E-mail'}}) }}
+                                {{ form_errors(form.email) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.plainPassword.first, {attr: {class: 'form-control form-control-custom ', placeholder: 'Mot de passe'}}) }}
+                                {{ form_errors(form.plainPassword.first) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.plainPassword.second, {attr: {class: 'form-control form-control-custom', placeholder: 'Confirmation de mot de passe'}}) }}
+                                {{ form_errors(form.plainPassword.second) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="row">
+                        {%  if user.accountType == "ROLE_ARCHITECT" or user.accountType == "ROLE_PROVIDER" %}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.architect_type, {attr: {class: 'form-control form-control-custom'}}) }}
+                                {{ form_errors(form.architect_type) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.oat, {attr: {class: 'form-control form-control-custom', placeholder: 'Matricule OAT'}}) }}
+                                {{ form_errors(form.oat) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.year_of_diploma, {attr: {class: 'form-control form-control-custom', placeholder: 'Année du diplôme'}}) }}
+                                {{ form_errors(form.year_of_diploma) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.institute_of_diploma, {attr: {class: 'form-control form-control-custom', placeholder: 'Diplomé(e) de'}}) }}
+                                {{ form_errors(form.institute_of_diploma) }}
+                            </div>
+                        </div>
+                            {% else %}
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form_widget(form.year_of_diploma, {attr: {class: 'form-control form-control-custom', placeholder: 'Année du diplôme (espéré)'}}) }}
+                                        {{ form_errors(form.year_of_diploma) }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form_widget(form.institute_of_diploma, {attr: {class: 'form-control form-control-custom', placeholder: "institut d'étude"}}) }}
+                                        {{ form_errors(form.institute_of_diploma) }}
+                                    </div>
+                                </div>
+                     {% endif %}
+                    </div>
+                </div>
+
+                <div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.phone, {attr: {class: 'form-control form-control-custom', placeholder: 'Numéro de Téléphone Professionnel'}}) }}
+                                {{ form_errors(form.phone) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.address, {attr: {class: 'form-control form-control-custom', placeholder: 'Adresse Professionnelle'}}) }}
+                                {{ form_errors(form.address) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.zip_code, {attr: {class: 'form-control form-control-custom', placeholder: 'Code Postal'}}) }}
+                                {{ form_errors(form.zip_code) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.city, {attr: {class: 'form-control form-control-custom', placeholder: 'Gouvernorat'}}) }}
+                                {{ form_errors(form.city) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.website, {attr: {class: 'form-control form-control-custom', placeholder: 'Site web'}}) }}
+                                {{ form_errors(form.website) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.facebook, {attr: {class: 'form-control form-control-custom', placeholder: 'Page Facebook'}}) }}
+                                {{ form_errors(form.facebook) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.instagram, {attr: {class: 'form-control form-control-custom', placeholder: 'Profil Instagram (Pro)'}}) }}
+                                {{ form_errors(form.instagram) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.linkedin, {attr: {class: 'form-control form-control-custom', placeholder: 'Profil Linkedin'}}) }}
+                                {{ form_errors(form.linkedin) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-group-file">
+                                {{ form_label(form.logo, 'Choisir votre photo', {label_attr: {class: 'btn btn-custom btn-custom-red'}}) }}
+                                {{ form_widget(form.logo, {attr: {class: 'form-control form-control-custom file'}}) }}
+                                {{ form_errors(form.logo) }}
+                                {% if user.logo != null %}
+                                    <img src="{{ asset('/uploads/logos/'~user.id~'/'~user.logo) }}" alt="{{ user.firstname }} {{ user.lastname }}" id="img" class="img-fluid">
+                                {% else %}
+                                     <img src="" alt="" id="img" class="img-fluid"/>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(form.description, {attr: {class: 'form-control form-control-custom', placeholder: 'Description sommaire'}}) }}
+                                {{ form_errors(form.description) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: right; margin: 20px 0;">
+                    <button type="submit" class="btn btn-custom btn-custom-black">Valider</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        jQuery('.file').on('change', function() {
+            document.getElementById('img').src = window.URL.createObjectURL(this.files[0])
+        });
+    </script>
+{% endblock %}

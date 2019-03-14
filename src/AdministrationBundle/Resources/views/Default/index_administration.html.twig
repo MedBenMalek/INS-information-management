@@ -1,0 +1,137 @@
+{% extends 'twig_index.html.twig' %}
+
+{% block title %}Gestion demande d'information{% endblock %}
+
+{% block body %}
+    <div class="wrapper">
+
+        <!-- Main Header -->
+        <header class="main-header">
+
+            <!-- Logo -->
+            <a href="index2.html" class="logo">
+                <!--<span class="logo-mini"><strong>A</strong>LT</span>-->
+                <span class="logo-lg">
+                    <img src="{{ asset('Ipi/dist/img/logo_blanc.jpg') }}" class="img" alt="INS">
+                </span>
+            </a>
+
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+
+
+                <!-- search form (Optional) -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+
+                    </div>
+                </form>
+                <!-- /.search form -->
+
+                <!-- Sidebar Menu -->
+                <ul class="sidebar-menu">
+
+                    <li class="active treeview">
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-dashboard"></i> <span> Demande information</span>
+                                <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                              </span>
+                            </a>
+                            <ul class="treeview-menu" style="display: none;">
+
+                                <li class=""><a  href="#" id="Gestion_demande"><i class="fa fa-circle-o"></i> <span> gestion demande</span></a></li>
+                                <li class=""><a  href="#" id="Gestion_demande"><i class="fa fa-circle-o"></i> <span> gestion demandeur</span></a></li>
+
+                            </ul>
+
+                        </li>
+                    </li>
+
+                </ul>
+
+
+
+                <!-- /.sidebar-menu -->
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+
+
+            <!-- Main content -->
+            <div class="row">
+                <div class="col-md-12">
+                    <section class="content">
+                        <div id="central">
+                        </div>
+                        <!-- Your Page Content Here -->
+
+                    </section>
+                </div>
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Main Footer -->
+        <footer class="main-footer">
+
+            <!-- Default to the left -->
+            <strong>Copyright 2019 <a href="#">INS</a>.</strong> All rights reserved.
+        </footer>
+
+        <div class="control-sidebar-bg"></div>
+    </div>
+{% endblock %}
+
+    {% block js %}7
+        <script type="text/javascript">
+        $(document).ready(function(){
+
+            $("#logout").click(function(){
+                location.href="logout";
+            });
+
+            $("#Gestion_demande").click(function(){
+
+                $("#central").html('<center><img src="../Ipi/dist/img/ajax-loader.gif" ><br><b>Patientez...</b></center>');
+                $.ajax({
+                    url : 'demande',
+                    type : 'POST',
+                    dataType : 'html',
+                    success : function(code_html, statut){
+                        $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
+                    },
+                    error : function(resultat, statut, erreur){
+                    },
+
+                    complete : function(resultat, statut){
+                    }
+                });
+
+            });
+
+        });
+        </script>
+    {% endblock %}

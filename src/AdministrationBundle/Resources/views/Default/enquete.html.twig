@@ -1,0 +1,101 @@
+<script>
+    table();  // functionjs
+</script>
+
+
+<div class="box box-primary">
+    <h4 class="box-title"><strong>Gestion des enquetes</strong></h4>
+    <div class="box-header with-border">
+
+    </div>
+    <div class="table">
+
+        <form role="form" id="headers">
+
+
+            <div id="tablesorter">
+
+
+                <table id="myTable" class=" tablesorter-blue " width="100%" role="grid">
+                    <thead class="tablesorter">
+                    <tr>
+                        <th width="5%">Id</th>
+                        <th width="30%">Nom</th>
+
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr role="row">
+                        <th colspan="3" class="ts-pager form-horizontal tablesorter-pager" data-column="0">
+
+                            <button type="button" class="btn first"><i
+                                        class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
+                            <button type="button" class="btn prev"><i
+                                        class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
+                            <span class="pagedisplay"></span>
+                            <button type="button" class="btn next"><i
+                                        class="icon-arrow-right glyphicon glyphicon-forward"></i></button>
+                            <button type="button" class="btn last"><i
+                                        class="icon-step-forward glyphicon glyphicon-step-forward"></i></button>
+                            <select class="pagesize input-mini" title="Select page size">
+                                <option selected="selected" value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+
+                            </select>
+                            <select class="pagenum input-mini" title="Select page number"></select>
+                        </th>
+                    </tr>
+                    </tfoot>
+
+                    <tbody id="affiche_enquete">
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <br>
+            <button id="btnajout" onclick="ajouter_enquete()" type="button">Ajouter</button>
+        </form>
+        <br/>
+
+
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title"><strong>Gestion enquête</strong></h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="frm" name="frm" method="post">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                            <body>
+                            <div class="form-group">
+                                <label id="label_identifiant" class="col-sm-2 control-label" for="">Identifiant</label>
+                                <input type="text" id="identifiant" name="identifiant"></p>
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <label id="label_nom_enquete" class="col-sm-2 control-label" for="">Nom enquête</label>
+                                <input name="nom_enquete" type="text" id="nom_enquete">
+                            </div>
+
+                            <div class="box-footer">
+                                <input type="button" id="valider_agent" class="btn btn-primary" value="Valider"
+                                       onclick="valider_enquete()">
+                                <button type="" class="btn btn-primary">Fermer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+

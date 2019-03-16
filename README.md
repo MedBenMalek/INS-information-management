@@ -1,4 +1,5 @@
-.checkout
+INS Project
 =========
 
-A Symfony project created on March 13, 2019, 10:25 am.
+A Symfony project
+for more informations: soon!

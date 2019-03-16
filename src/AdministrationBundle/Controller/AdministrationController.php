@@ -21,7 +21,7 @@ class AdministrationController extends Controller
     }
 
     /**
-     * @Route("/demandeur")
+     * @Route("bib/demandeur")
      */
     public function demandeurAction(Request $request)
     {
@@ -33,14 +33,34 @@ class AdministrationController extends Controller
     }
 
     /**
-     * @Route("/demande")
+     * @Route("bib/demande")
      */
     public function demandeAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $demande = $em->getRepository('AdministrationBundle:seekersBib')->findAll();
 
-        return $this->render('@Administration/agentBib/demande.html.twig', ['demands' => $demande]);
+        return $this->render('@Administration/agentBib/demande.html.twig');
+
+    }
+
+    /**
+     * @Route("responsible/demande")
+     */
+    public function RespDemandeAction(Request $request)
+    {
+
+        return $this->render('@Administration/agentEmail/demande.html.twig');
+
+    }
+
+    /**
+     * @Route("responsible/demandeur")
+     */
+    public function RespDemandeurAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $demandeurs = $em->getRepository('AdministrationBundle:seekersBib')->findAll();
+
+        return $this->render('@Administration/agentEmail/demandeur.html.twig', ['demandeurs' => $demandeurs]);
 
     }
 

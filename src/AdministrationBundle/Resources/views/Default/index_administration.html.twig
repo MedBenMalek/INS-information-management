@@ -40,7 +40,7 @@
                         <img src="{{ asset('Ipi/dist/img/user1-128x128.jpg') }}" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p style="margin-top: 10px">Alexander Pierce</p>
+                        <p style="margin-top: 10px">Med malik</p>
                     </div>
                 </div>
 
@@ -58,6 +58,10 @@
                             <li class=""><a href="#" id="Gestion_demande"><i class="fa fa-circle-o"></i> <span> gestion demande</span></a>
                             </li>
                             <li class=""><a href="#" id="Gestion_demandeur"><i class="fa fa-circle-o"></i> <span> gestion demandeur</span></a>
+                            </li>
+                            <li class=""><a href="#" id="Gestion_demande_resp"><i class="fa fa-circle-o"></i> <span> gestion demande</span></a>
+                            </li>
+                            <li class=""><a href="#" id="Gestion_demandeur_resp"><i class="fa fa-circle-o"></i> <span> gestion demandeur</span></a>
                             </li>
 
                         </ul>
@@ -115,7 +119,7 @@
 
                     $("#central").html('<center><img src="../Ipi/dist/img/ajax-loader.gif" ><br><b>Patientez...</b></center>');
                     $.ajax({
-                        url: 'demande',
+                        url: 'bib/demande',
                         type: 'POST',
                         dataType: 'html',
                         success: function (code_html, statut) {
@@ -134,7 +138,45 @@
 
                     $("#central").html('<center><img src="../Ipi/dist/img/ajax-loader.gif" ><br><b>Patientez...</b></center>');
                     $.ajax({
-                        url: 'demandeur',
+                        url: 'bib/demandeur',
+                        type: 'POST',
+                        dataType: 'html',
+                        success: function (code_html, statut) {
+                            $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
+                        },
+                        error: function (resultat, statut, erreur) {
+                        },
+
+                        complete: function (resultat, statut) {
+                        }
+                    });
+
+                });
+
+                $("#Gestion_demande_resp").click(function () {
+
+                    $("#central").html('<center><img src="../Ipi/dist/img/ajax-loader.gif" ><br><b>Patientez...</b></center>');
+                    $.ajax({
+                        url: 'responsible/demande',
+                        type: 'POST',
+                        dataType: 'html',
+                        success: function (code_html, statut) {
+                            $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
+                        },
+                        error: function (resultat, statut, erreur) {
+                        },
+
+                        complete: function (resultat, statut) {
+                        }
+                    });
+
+                });
+
+                $("#Gestion_demandeur_resp").click(function () {
+
+                    $("#central").html('<center><img src="../Ipi/dist/img/ajax-loader.gif" ><br><b>Patientez...</b></center>');
+                    $.ajax({
+                        url: 'responsible/demandeur',
                         type: 'POST',
                         dataType: 'html',
                         success: function (code_html, statut) {

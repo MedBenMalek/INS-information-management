@@ -77,6 +77,25 @@ class seekersBib
      */
     private $firstTime;
 
+    /**
+     *
+     * @ORM\Column(name="datedemande", type="datetime", nullable=true)
+     */
+    private $datedemande;
+
+    /**
+     *
+     * @ORM\Column(name="dateresponse", type="datetime", nullable=true)
+     */
+    private $dateresponse;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cle", type="string", length=255, nullable=true)
+     */
+    private $cle;
+
 
     /**
      * Get id
@@ -279,5 +298,56 @@ class seekersBib
     {
         return $this->firstTime;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDatedemande()
+    {
+        return $this->datedemande;
+    }
+
+    /**
+     * @param mixed $datedemande
+     */
+    public function setDatedemande($datedemande)
+    {
+        $this->datedemande = $datedemande;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateresponse()
+    {
+        return $this->dateresponse;
+    }
+
+    /**
+     * @param mixed $dateresponse
+     */
+    public function setDateresponse($dateresponse)
+    {
+        $this->dateresponse = $dateresponse;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCle()
+    {
+        return $this->cle;
+    }
+
+    /**
+     * @param string $cle
+     */
+    public function setCle($cle)
+    {
+        $this->cle = $cle;
+    }
+
+
+
 }
 

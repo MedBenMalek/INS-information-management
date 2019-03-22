@@ -2,22 +2,21 @@
 
 namespace AdministrationBundle\Controller;
 
+use AdministrationBundle\Entity\seekersBib;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 
 class AdministrationController extends Controller
 {
     /**
-     * @Route("/login")
+     * @Route("/login", name="login_page")
      */
     public function loginAction(Request $request)
     {
-        if ($request->getMethod() == 'POST') {
             return $this->render('@Administration/Default/index_administration.html.twig');
-        } else {
-            return $this->render('@Administration/Default/login.html.twig');
-        }
     }
 
     /**
@@ -33,12 +32,46 @@ class AdministrationController extends Controller
     }
 
     /**
+     * @Route("bib/demandeur/date")
+     */
+    public function demandeurDateAction(Request $request)
+    {
+
+        $start = $request->request->get('start');
+        $end = $request->request->get('end');
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        $demandeur = $this->getDoctrine()
+            ->getManager()
+            ->createQuery('SELECT e FROM AdministrationBundle:seekersBib e WHERE e.datedemande >'.$start.'and e.datedemande <'.$end )
+            ->getResult();
+
+        return $this->render('@Administration/agentBib/affichedemandedate.html.twig', ['demandeur' => $demandeur]);
+
+    }
+
+    /**
+     * @Route("bib/demandeur/{id}", name="demandeur_view")
+     */
+    public function GetDemandeAction(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $demandeur = $em->getRepository('AdministrationBundle:seekersBib')->find($id);
+
+        return $this->render('@Administration/agentBib/affichageDemande.html.twig', ['demandeur' => $demandeur]);
+
+    }
+
+    /**
      * @Route("bib/demande")
      */
     public function demandeAction(Request $request)
     {
-
-        return $this->render('@Administration/agentBib/demande.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $demandeur = $em->getRepository('AdministrationBundle:seekersBib')->findAll();
+        return $this->render('@Administration/agentBib/demande.html.twig', ['demandeur' => $demandeur]);
 
     }
 
@@ -47,8 +80,9 @@ class AdministrationController extends Controller
      */
     public function RespDemandeAction(Request $request)
     {
-
-        return $this->render('@Administration/agentEmail/demande.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $demandeur = $em->getRepository('AdministrationBundle:seekersBib')->findAll();
+        return $this->render('@Administration/agentEmail/demande.html.twig', ['demandeurs' => $demandeur]);
 
     }
 
@@ -57,11 +91,34 @@ class AdministrationController extends Controller
      */
     public function RespDemandeurAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $demandeurs = $em->getRepository('AdministrationBundle:seekersBib')->findAll();
 
-        return $this->render('@Administration/agentEmail/demandeur.html.twig', ['demandeurs' => $demandeurs]);
+        return $this->render('@Administration/agentEmail/demandeForm.html.twig');
 
+    }
+
+    /**
+     * Creates a new demande entity.
+     *
+     * @Route("bib/newdemande", name="demande_new")
+     * @Method({"GET", "POST"})
+     */
+    public function newDemandeAction(Request $request)
+    {
+        $demande = new seekersBib();
+        $form = $this->createForm('AdministrationBundle\Form\seekersBibType', $demande);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($demande);
+            $em->flush();
+            return $this->redirectToRoute('login_page');
+        }
+
+        return $this->render('@Administration/agentBib/newdemande.html.twig', array(
+            'demande' => $demande,
+            'form' => $form->createView(),
+        ));
     }
 
     public function loginancienAction(Request $request)

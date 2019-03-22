@@ -1,0 +1,86 @@
+<div class="modal-body">
+    {{ form_start(form.lastname, { 'attr': {'action': path("demande_new")} }) }}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ form_label(form.lastname, 'Nom') }}
+                {{ form_widget(form.lastname, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ form_label(form.firstname, 'Prenom') }}
+                {{ form_widget(form.firstname, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ form_label(form.activity, 'Activite') }}
+                {{ form_widget(form.activity, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ form_label(form.email, 'Email') }}
+                {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ form_label(form.tel, 'Tel') }}
+                {{ form_widget(form.tel, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ form_label(form.organization, 'Organization') }}
+                {{ form_widget(form.organization, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.type, 'Type') }}
+                {{ form_widget(form.type, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group" style="margin-top:28px">
+                {{ form_label(form.firstTime, 'Premier fois') }}
+                <div style="margin-left: 10px;display: inline">
+                    {{ form_widget(form.firstTime, { 'attr': {'class': 'flat-red'} }) }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.datedemande, 'Date') }}
+                {{ form_widget(form.datedemande, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.cle, 'Cle') }}
+                {{ form_widget(form.cle, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary btn-lg">Valider</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+</div>
+<div class="modal-footer">
+</div>
+
+<script>
+
+</script>

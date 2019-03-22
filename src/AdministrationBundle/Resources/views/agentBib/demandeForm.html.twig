@@ -1,0 +1,92 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Gestion demande
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Acceuil</a></li>
+        <li><a href="#">Demande information</a></li>
+        <li class="active">Gestion demande</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <h3 class="box-title">Recherche une information</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="titre">Titre</label>
+                                <input type="text" class="form-control" name="titre" id="titre"
+                                       placeholder="Entrer titre">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="cle">Mot cle</label>
+                                <input type="text" class="form-control" name="cle" id="cle"
+                                       placeholder="Entrer mote cle">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="etat">Etat</label>
+                                <select name="etat" id="etat" class="form-control">
+                                    <option value="service">
+                                        Service
+                                    </option>
+                                    <option value="produit">
+                                        Produit
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group text-center">
+                                <label>
+                                    <input type="checkbox" name="indexation" class="flat-red">
+                                    Indexation
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <div class="form-group text-center">
+                                <label>
+                                    <input type="checkbox" name="localisation" class="flat-red">
+                                    Localisation
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="submit" value="Valider" class="btn  btn-success btn-lg btn-block">
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+
+    {#result section#}
+    <div class="row" id="result">
+
+    </div>
+</section>
+
+<script>
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+        checkboxClass: 'icheckbox_flat-green'
+        ,
+        radioClass: 'iradio_flat-green'
+    })
+</script>

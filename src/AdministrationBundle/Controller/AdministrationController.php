@@ -32,6 +32,23 @@ class AdministrationController extends Controller
     }
 
     /**
+     * @Route("bib/demande/delete/{id}")
+     */
+    public function demandeurDeleteAction(Request $request, $id)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $demandeur01 = $em->getRepository('AdministrationBundle:seekersBib')->find($id);
+        $em->remove($demandeur01);
+        $em->flush();
+        $demandeur = $em->getRepository('AdministrationBundle:seekersBib')->findAll();
+
+        return $this->render('@Administration/agentBib/demande.html.twig', ['demandeur' => $demandeur]);
+
+    }
+
+    /**
      * @Route("bib/demandeur/date")
      */
     public function demandeurDateAction(Request $request)
@@ -45,7 +62,7 @@ class AdministrationController extends Controller
 
         $demandeur = $this->getDoctrine()
             ->getManager()
-            ->createQuery('SELECT e FROM AdministrationBundle:seekersBib e WHERE e.datedemande >'.$start.'and e.datedemande <'.$end )
+            ->createQuery('SELECT e FROM AdministrationBundle:seekersBib e WHERE e.datedemande >='.$start.'and e.datedemande <='.$end )
             ->getResult();
 
         return $this->render('@Administration/agentBib/affichedemandedate.html.twig', ['demandeur' => $demandeur]);
@@ -97,11 +114,11 @@ class AdministrationController extends Controller
     }
 
     /**
-     * Creates a new demande entity.
-     *
-     * @Route("bib/newdemande", name="demande_new")
-     * @Method({"GET", "POST"})
-     */
+ * Creates a new demande entity.
+ *
+ * @Route("bib/newdemande", name="demande_new")
+ * @Method({"GET", "POST"})
+ */
     public function newDemandeAction(Request $request)
     {
         $demande = new seekersBib();

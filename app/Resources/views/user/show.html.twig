@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-md-3 col-xs-6 b-r"><strong>Nom complet</strong>
+        <br>
+        <p class="text-muted">{{ user.firstname }} {{ user.lastname }}</p>
+    </div>
+    <div class="col-md-3 col-xs-6 b-r"><strong>Numéro de téléphone</strong>
+        <br>
+        <p class="text-muted">{{ user.phone }}</p>
+    </div>
+    <div class="col-md-3 col-xs-6 b-r"><strong>Email</strong>
+        <br>
+        <p class="text-muted">{{ user.email }}</p>
+    </div>
+    <div class="col-md-3 col-xs-6"><strong>Adreese</strong>
+        <br>
+        <p class="text-muted">{{ user.address }}</p>
+    </div>
+</div>
+<hr>
+<h4>Description</h4>
+<p class="mt-4">{{ user.description }}</p>
+<hr>
+<div class="text-center">
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <a href="{{ path('user_edit', { 'id': user.id }) }}"
+               class="btn btn-info">
+                <i class="mdi mdi-pencil"></i>
+                <span class="text">Modifier</span>
+            </a>
+        </div>
+        <div class="col-md-6 text-center">
+            {{ form_start(delete_form) }}
+            <button type="submit" value="Delete" class="btn btn-danger">
+                <i class="mdi mdi-delete"></i>
+                <span class="text">Supprimer</span>
+            </button>
+            {{ form_end(delete_form) }}
+        </div>
+    </div>
+</div>
+

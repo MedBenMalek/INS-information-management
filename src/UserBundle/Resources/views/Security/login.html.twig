@@ -1,7 +1,91 @@
-{% extends "::base.html.twig" %}
-{% set title = 'Archispace - login' %}
-{% set header = 'Archi<span>space</span>' %}
+<!DOCTYPE html>
+<html dir="ltr" lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('backend/assets/images/favicon.png') }}">
+    <title>Se connecter</title>
+    <!-- Custom CSS -->
+    <link href="{{ asset('backend/dist/css/style.min.css') }}" rel="stylesheet">
 
-{% block body %}
-    {{ include('@FOSUser/Security/login_content.html.twig') }}
-{% endblock %}
+</head>
+
+<body>
+<div class="main-wrapper">
+
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+
+    <div class="auth-wrapper d-flex no-block justify-content-center align-items-center"
+         style="background:url({{ asset('backend/assets/images/big/auth-bg.jpg') }}) no-repeat center center;">
+        <div class="auth-box">
+            <div id="loginform">
+                <div class="logo">
+                    <span class="db"><img src="{{ asset('backend/assets/images/logos/logo-icon.png') }}"
+                                          alt="logo"/></span>
+                    <h5 class="font-medium mb-3">Se connecter</h5>
+                </div>
+                <!-- Form -->
+                {{ include('@FOSUser/Security/login_content.html.twig') }}
+            </div>
+            <div id="recoverform">
+                <div class="logo">
+                    <span class="db"><img src="{{ asset('backend/assets/images/logos/logo-icon.png') }}"
+                                          alt="logo"/></span>
+                    <h5 class="font-medium mb-3">Récupérer mot de passe</h5>
+                    <span>Entrez votre email et les instructions vous seront envoyées!</span>
+                </div>
+                <div class="row mt-3">
+                    <!-- Form -->
+                    <form class="col-12"
+                          action="https://wrappixel.com/ampleadmin/ampleadmin-html/ampleadmin-sidebar/index.html">
+                        <!-- email -->
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <input class="form-control form-control-lg" type="email" required=""
+                                       placeholder="Username">
+                            </div>
+                        </div>
+                        <!-- pwd -->
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <button class="btn btn-block btn-lg btn-danger" type="submit" name="action">
+                                    Réinitialiser
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ asset('backend/assets/libs/jquery/dist/jquery.min.js') }}"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="{{ asset('backend/assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
+<script src="{{ asset('backend/assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<!-- ============================================================== -->
+<!-- This page plugin js -->
+<!-- ============================================================== -->
+<script>
+    $('[data-toggle="tooltip"]').tooltip();
+    $(".preloader").fadeOut();
+    // ==============================================================
+    // Login and Recover Password
+    // ==============================================================
+    $('#to-recover').on("click", function () {
+        $("#loginform").slideUp();
+        $("#recoverform").fadeIn();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="page-wrapper">
+        <div class="page-breadcrumb border-bottom">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
+                    <h5 class="font-medium text-uppercase mb-0">Modifier Utilisateur</h5>
+                </div>
+                <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
+                    <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
+                        <ol class="breadcrumb mb-0 justify-content-end p-0">
+                            <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Modifier Utilisateur</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Modifier les information de {{ user.firstname }} {{ user.lastname }}</h4>
+                    {{ form_start(edit_form) }}
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            {{ form_label(edit_form.lastname, 'Nom') }}
+                            {{ form_widget(edit_form.lastname, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            {{ form_label(edit_form.firstname, 'Prenom') }}
+                            {{ form_widget(edit_form.firstname, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            {{ form_label(edit_form.email, 'Email') }}
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                </div>
+                                {{ form_widget(edit_form.email, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            {{ form_label(edit_form.phone, 'Numero de telephone') }}
+                            {{ form_widget(edit_form.phone, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            {{ form_label(edit_form.address, 'Adress') }}
+                            {{ form_widget(edit_form.address, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            {{ form_label(edit_form.zipCode, 'ZIP code') }}
+                            {{ form_widget(edit_form.zipCode, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-12">
+                            {{ form_label(edit_form.description, 'Description') }}
+                            {{ form_widget(edit_form.description, { 'attr': {'class': 'form-control','cols': '30','rows': '8', } }) }}
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-md-12">
+                            <br/>
+                            <button class="btn btn-primary btn-lg" type="submit">Valider</button>
+                        </div>
+                    </div>
+
+                    {{ form_row(edit_form._token) }}
+                    {{ form_end(edit_form, {'render_rest': false}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

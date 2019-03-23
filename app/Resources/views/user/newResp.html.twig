@@ -1,0 +1,87 @@
+<section class="content-header">
+    <h1>
+        List des utilisateurs
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Acceuil</a></li>
+        <li><a href="{{ path('homepage') }}">Tableau de bord</a></li>
+        <li class="active">Modifier utilisateur</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <h3 class="box-title">Modifier les information de {{ user.firstname }} {{ user.lastname }}</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {{ form_start(form, { 'attr': {'action': path("user_new_resp")} }) }}
+                            <div class="form-row">
+                                <div class="col-md-3 mb-3">
+                                    {{ form_label(form.lastname, 'Nom') }}
+                                    {{ form_widget(form.lastname, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    {{ form_label(form.username, 'Username') }}
+                                    {{ form_widget(form.username, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    {{ form_label(form.firstname, 'Prenom') }}
+                                    {{ form_widget(form.firstname, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    {{ form_label(form.email, 'Email') }}
+                                    {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    {{ form_label(form.phone, 'Numero de telephone') }}
+                                    {{ form_widget(form.phone, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    {{ form_label(form.address, 'Adresse') }}
+                                    {{ form_widget(form.address, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    {{ form_label(form.zipCode, 'ZIP code') }}
+                                    {{ form_widget(form.zipCode, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-6">
+                                    {{ form_label(form.plainPassword.first, 'mot de passe') }}
+                                    {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                                <div class="col-md-6 mb-6">
+                                    {{ form_label(form.plainPassword.second, 'confirmer') }}
+                                    {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="form-row">
+                                <div class="col-md-12 mb-12">
+                                    {{ form_label(form.description, 'Description') }}
+                                    {{ form_widget(form.description, { 'attr': {'class': 'form-control','cols': '30','rows': '8', } }) }}
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col-md-12">
+                                    <br/>
+                                    <button class="btn btn-primary btn-lg" type="submit">Valider</button>
+                                </div>
+                            </div>
+
+                            {{ form_row(form._token) }}
+                            {{ form_end(form, {'render_rest': false}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

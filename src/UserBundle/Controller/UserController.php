@@ -17,16 +17,33 @@ class UserController extends Controller
     /**
      * Lists all user entities.
      *
-     * @Route("/", name="user_index")
+     * @Route("/bib", name="user_index_bib")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexBibAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $users = $em->getRepository('UserBundle:User')->findAll();
+        $users = $em->getRepository('UserBundle:User')->findByRole('ROLE_BIB');
 
-        return $this->render('user/index.html.twig', array(
+        return $this->render('user/indexBib.html.twig', array(
+            'users' => $users,
+        ));
+    }
+
+    /**
+     * Lists all user entities.
+     *
+     * @Route("/resp", name="user_index_resp")
+     * @Method("GET")
+     */
+    public function indexRespAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $users = $em->getRepository('UserBundle:User')->findByRole('ROLE_EMAIL');
+
+        return $this->render('user/indexResp.html.twig', array(
             'users' => $users,
         ));
     }
@@ -34,24 +51,52 @@ class UserController extends Controller
     /**
      * Creates a new user entity.
      *
-     * @Route("/new", name="user_new")
+     * @Route("resp/new", name="user_new_resp")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newRespAction(Request $request)
     {
         $user = new User();
         $form = $this->createForm('UserBundle\Form\UserTypeNew', $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setRoles(['ROLE_EMAIL']);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('user_index');
+            return $this->redirectToRoute('admin_index');
         }
 
-        return $this->render('user/new.html.twig', array(
+        return $this->render('user/newresp.html.twig', array(
+            'user' => $user,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * Creates a new user entity.
+     *
+     * @Route("bib/new", name="user_new_bib")
+     * @Method({"GET", "POST"})
+     */
+    public function newBibAction(Request $request)
+    {
+        $user = new User();
+        $form = $this->createForm('UserBundle\Form\UserTypeNew', $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setRoles(['ROLE_BIB']);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirectToRoute('admin_index');
+        }
+
+        return $this->render('user/newBib.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),
         ));
@@ -63,13 +108,13 @@ class UserController extends Controller
      * @Route("/{id}", name="user_show")
      * @Method("GET")
      */
-    public function showAction(User $user)
+    public function showAction($id)
     {
-        $deleteForm = $this->createDeleteForm($user);
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('UserBundle:User')->find($id);
 
         return $this->render('user/show.html.twig', array(
             'user' => $user,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -81,38 +126,59 @@ class UserController extends Controller
      */
     public function editAction(Request $request, User $user)
     {
-        $deleteForm = $this->createDeleteForm($user);
         $editForm = $this->createForm('UserBundle\Form\UserType', $user);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_index');
+            return $this->redirectToRoute('admin_index');
         }
 
         return $this->render('user/edit.html.twig', array(
             'user' => $user,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
      * Deletes a user entity.
      *
-     * @Route("/d/{id}", name="user_delete")
+     * @Route("/d/{id}/{role}", name="user_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, User $user, $id)
+    public function deleteAction(Request $request, User $user, $id, $role)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('UserBundle:User')->find($id);
         $em->remove($user);
         $em->flush();
 
+        if($role == 'resp')
+            return $this->redirectToRoute('user_index_resp');
+        return $this->redirectToRoute('user_index_bib');
+    }
 
-        return $this->redirectToRoute('user_index');
+    /**
+     *
+     * @Route("/activate/{id}/{role}", name="user_activate")
+     * @Method("DELETE")
+     */
+    public function activateUserAction($id, $role)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('UserBundle:User')->find($id);
+        if ($user->isEnabled()){
+            $user->setEnabled(false);
+        }else{
+            $user->setEnabled(true);
+        }
+
+        $em->flush();
+
+        if($role == 'resp')
+            return $this->redirectToRoute('user_index_resp');
+        return $this->redirectToRoute('user_index_bib');
     }
 
     /**

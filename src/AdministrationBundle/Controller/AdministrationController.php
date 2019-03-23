@@ -17,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class AdministrationController extends Controller
 {
     /**
-     * @Route("/", name="login_page")
+     * @Route("/", name="admin_index")
      */
     public function loginAction(Request $request)
     {
@@ -134,7 +134,7 @@ class AdministrationController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($demande);
             $em->flush();
-            return $this->redirectToRoute('login_page');
+            return $this->redirectToRoute('admin_index');
         }
 
         return $this->render('@Administration/agentBib/newdemande.html.twig', array(

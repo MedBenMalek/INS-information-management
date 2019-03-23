@@ -28,6 +28,11 @@
 <body class="login-page">
 <div class="login-box">
     <div class="login-logo">
+        <div class="row">
+            <div class="col-md-12">
+                <img src="{{ asset('Ipi/dist/img/logob.png') }}" class="img" alt="INS">
+            </div>
+        </div>
         <span><b>Authentification</b><br>Demande Information</span>
     </div><!-- /.login-logo -->
     {{ include('@FOSUser/Security/login_content.html.twig') }}

@@ -36,13 +36,17 @@ security:
         main:
             pattern: ^/
             form_login:
+                check_path: /login_check
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
-            logout: true
+                default_target_path: /admin
+            logout:
+                path:   /logout
+                target: /login
             anonymous: true
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/admin/, role: ROLE_USER }

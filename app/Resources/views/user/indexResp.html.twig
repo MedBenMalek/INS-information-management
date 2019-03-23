@@ -1,0 +1,285 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        List des utilisateurs
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Acceuil</a></li>
+        <li><a href="{{ path('homepage') }}">Tableau de bord</a></li>
+        <li class="active">List des utilisateurs</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <h3 class="box-title">Liste des demandes</h3>
+                </div>
+                <div class="box-body">
+                    <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                        <div class="row">
+                            <div class="col-sm-12 text-center">
+                                <button onclick="adduser('{{ path('user_new_resp') }}')" type="button" class="btn bg-purple margin">
+                                    <i class="fa fa-plus margin"></i>
+                                    Ajouter utilisateur
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="example2" class="table table-bordered table-hover dataTable" role="grid"
+                                       aria-describedby="example2_info">
+                                    <thead>
+                                    <tr role="row">
+                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
+                                            colspan="1" aria-sort="ascending"
+                                            aria-label="Rendering engine: activate to sort column descending">nom
+                                        </th>
+                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
+                                            colspan="1" aria-sort="ascending"
+                                            aria-label="Rendering engine: activate to sort column descending">Prenom
+                                        </th>
+                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
+                                            colspan="1" aria-sort="ascending"
+                                            aria-label="Rendering engine: activate to sort column descending">Email
+                                        </th>
+                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
+                                            colspan="1" aria-sort="ascending"
+                                            aria-label="Rendering engine: activate to sort column descending">Tel
+                                        </th>
+                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
+                                            colspan="1" aria-sort="ascending"
+                                            aria-label="Rendering engine: activate to sort column descending">Address
+                                        </th>
+                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
+                                            colspan="1" aria-sort="ascending"
+                                            aria-label="Rendering engine: activate to sort column descending">
+                                            Status
+                                        </th>
+                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
+                                            colspan="1" aria-sort="ascending"
+                                            aria-label="Rendering engine: activate to sort column descending">Actions
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                    {% for user in users %}
+                                        <tr>
+                                            <td>{{ user.firstname }}</td>
+                                            <td>{{ user.lastname }}</td>
+                                            <td>{{ user.email }}</td>
+                                            <td>{{ user.phone }}</td>
+                                            <td>{{ user.address }}</td>
+                                            <td>{% if user.enabled %}
+                                                    <span class="text-uppercase text-white font-medium label label-success">Activer</span>
+                                                {% else %}
+                                                    <span class="text-uppercase text-white font-medium label label-danger">Non activer</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <button href="{{ path('user_show', { 'id': user.id}) }}"
+                                                        onclick="showuser('{{ path('user_show', { 'id': user.id}) }}')"
+                                                        class="btn btn-purple btn-sm">
+                                                    <i class="mdi mdi-eye"></i>
+                                                    <span>Afficher</span>
+                                                </button>
+                                                <button onclick="edituser('{{ path('user_edit', { 'id': user.id}) }}')"
+                                                        class="btn btn-info btn-sm">
+                                                    <i class="mdi mdi-pencil"></i>
+                                                    <span>Modifier</span>
+                                                </button>
+                                                <button onclick="deleteuser('{{ path('user_delete', { 'id': user.id , 'role': 'resp' }) }}')"
+                                                        class="btn btn-danger btn-sm">
+                                                    <i class="mdi mdi-delete"></i>
+                                                    <span>Supprimer</span>
+                                                </button>
+                                                {% if user.enabled %}
+                                                    <button onclick="adduser('{{ path('user_activate', { 'id': user.id , 'role': 'resp' }) }}')"Activate
+                                                            class="btn btn-success btn-sm">
+                                                        <i class="mdi mdi-pencil"></i>
+                                                        <span>désactivée</span>
+                                                    </button>
+                                                {% else %}
+                                                    <button onclick="adduser('{{ path('user_activate', { 'id': user.id , 'role': 'resp' }) }}')"Activate
+                                                            class="btn btn-success btn-sm">
+                                                        <i class="mdi mdi-pencil"></i>
+                                                        <span>Activate</span>
+                                                    </button>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <div class="row" id="usershow"></div>
+</section>
+
+
+{% block js %}
+    <script>
+        $(function () {
+            $('#example2').DataTable({
+                "pageLength": 5,
+                'paging': true,
+                'lengthChange': false,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true,
+                "language": {
+                    "sEmptyTable": "Aucune donnée disponible dans le tableau",
+                    "sInfo": "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+                    "sInfoEmpty": "Affichage de l'élément 0 à 0 sur 0 élément",
+                    "sInfoFiltered": "(filtré à partir de _MAX_ éléments au total)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ",",
+                    "sLengthMenu": "Afficher _MENU_ éléments",
+                    "sLoadingRecords": "Chargement...",
+                    "sProcessing": "Traitement...",
+                    "sSearch": "Rechercher :",
+                    "sZeroRecords": "Aucun élément correspondant trouvé",
+                    "oPaginate": {
+                        "sFirst": "Premier",
+                        "sLast": "Dernier",
+                        "sNext": "Suivant",
+                        "sPrevious": "Précédent"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                        "sSortDescending": ": activer pour trier la colonne par ordre décroissant"
+                    },
+                    "select": {
+                        "rows": {
+                            "_": "%d lignes sélectionnées",
+                            "0": "Aucune ligne sélectionnée",
+                            "1": "1 ligne sélectionnée"
+                        }
+                    }
+                }
+            })
+        });
+
+        function showuser(path) {
+
+            $("#usershow").html(`
+                <div class="col-12 text-center" style="margin-top: 100px">
+                       <img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" >
+                    <br><br>
+                </div>
+               `);
+
+            $.ajax({
+                url: path,
+                type: 'POST',
+                dataType: 'html',
+                success: function (code_html, statut) {
+                    $("#usershow").html(`
+                    <div class="col-xs-12">
+                    <div class="box box-warning">
+                         <div class="box-header">
+                         </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    ` + code_html + `
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    `);
+                },
+                error: function (resultat, statut, erreur) {
+                },
+
+                complete: function (resultat, statut) {
+                }
+            });
+        };
+
+        function edituser(path) {
+
+            $("#central").html(`
+                <div class="col-12 text-center" style="margin-top: 100px">
+                       <img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" >
+                    <br><br>
+                </div>
+               `);
+
+            $.ajax({
+                url: path,
+                type: 'POST',
+                dataType: 'html',
+                success: function (code_html, statut) {
+                    $("#central").html(code_html);
+                },
+                error: function (resultat, statut, erreur) {
+                },
+
+                complete: function (resultat, statut) {
+                }
+            });
+        };
+
+        function deleteuser(path) {
+
+            $("#central").html(`
+                <div class="col-12 text-center" style="margin-top: 100px">
+                       <img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" >
+                    <br><br>
+                </div>
+               `);
+
+            $.ajax({
+                url: path,
+                type: 'POST',
+                dataType: 'html',
+                success: function (code_html, statut) {
+                    $("#central").html(code_html);
+                },
+                error: function (resultat, statut, erreur) {
+                },
+
+                complete: function (resultat, statut) {
+                }
+            });
+        };
+
+        function adduser(path) {
+
+            $("#central").html(`
+                <div class="col-12 text-center" style="margin-top: 100px">
+                       <img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" >
+                    <br><br>
+                </div>
+               `);
+
+            $.ajax({
+                url: path,
+                type: 'POST',
+                dataType: 'html',
+                success: function (code_html, statut) {
+                    $("#central").html(code_html);
+                },
+                error: function (resultat, statut, erreur) {
+                },
+
+                complete: function (resultat, statut) {
+                }
+            });
+        };
+
+    </script>
+{% endblock %}

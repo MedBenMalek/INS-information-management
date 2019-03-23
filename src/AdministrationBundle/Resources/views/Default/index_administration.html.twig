@@ -9,10 +9,11 @@
         <header class="main-header">
 
             <!-- Logo -->
-            <a href="index2.html" class="logo">
-                <!--<span class="logo-mini"><strong>A</strong>LT</span>-->
-                <span class="logo-lg">
-                    <img src="{{ asset('Ipi/dist/img/logo_blanc.jpg') }}" class="img" alt="INS">
+            <a href="{{ path('admin_index') }}" class="logo" >
+
+                <span class="logo-mini"><b>INS</b></span>
+                <span class="logo-lg" >
+                    <img width="165px" src="{{ asset('Ipi/dist/img/logob1.png') }}" class="img" alt="INS">
                 </span>
             </a>
 
@@ -22,12 +23,49 @@
                 <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                     <span class="sr-only">Toggle navigation</span>
                 </a>
-                <!-- Navbar Right Menu -->
+
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
+                        <!-- Notifications: style can be found in dropdown.less -->
+                        <li class="dropdown notifications-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                            </a>
+                        </li>
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="{{ asset('Ipi/dist/img/user7-128x128.jpg') }}" class="user-image" alt="User Image">
+                                <span class="hidden-xs">{{ app.user.firstname }} {{ app.user.lastname }}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="{{ asset('Ipi/dist/img/user7-128x128.jpg') }}" class="img-circle" alt="User Image">
+                                    <p>
+                                        {{ app.user.firstname }} {{ app.user.lastname }}
+                                        <small>
+                                            {% if is_granted('ROLE_ADMIN') %}Adminstrateur {% endif %}
+                                            {% if is_granted('ROLE_BIB') %} Agent Bibliotheque {% endif %}
+                                            {% if is_granted('ROLE_EMAIL') %} Agent Email {% endif %}
+                                        </small>
+                                    </p>
+                                </li>
+                                <li class="user-footer">
+                                    <div class="text-center">
+                                        <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">Déconnecté</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
+
             </nav>
+
+
+
+
         </header>
         <!-- Left side column. contains the logo and sidebar -->
         <aside class="main-sidebar">
@@ -37,37 +75,58 @@
 
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="{{ asset('Ipi/dist/img/user1-128x128.jpg') }}" class="img-circle" alt="User Image">
+                        <img style="margin-top: 13px" src="{{ asset('Ipi/dist/img/user7-128x128.jpg') }}" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p style="margin-top: 10px">Med malik</p>
+                        <p style="margin-top: 10px">{{ app.user.firstname }} {{ app.user.lastname }} </p>
+                            <small>
+                                {% if is_granted('ROLE_ADMIN') %}Adminstrateur {% endif %}
+                                {% if is_granted('ROLE_BIB') %} Agent Bibliotheque {% endif %}
+                                {% if is_granted('ROLE_EMAIL') %} Agent Email {% endif %}
+                            </small>
                     </div>
                 </div>
-
+                <br/>
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">
-                    <li class="treeview active">
-                        <a href="#">
-                            <i class="fa fa-dashboard"></i> <span> Demande information</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                              </span>
-                        </a>
-                        <ul class="treeview-menu" style="display: none;">
 
-                            <li class=""><a href="#" id="Gestion_demande"><i class="fa fa-circle-o"></i> <span> gestion demande</span></a>
-                            </li>
-                            <li class=""><a href="#" id="Gestion_demandeur"><i class="fa fa-circle-o"></i> <span> gestion demandeur</span></a>
-                            </li>
-                            <li class=""><a href="#" id="Gestion_demande_resp"><i class="fa fa-circle-o"></i> <span> gestion demande</span></a>
-                            </li>
-                            <li class=""><a href="#" id="Gestion_demandeur_resp"><i class="fa fa-circle-o"></i> <span> gestion demandeur</span></a>
-                            </li>
-
-                        </ul>
-
+                    {% if is_granted('ROLE_ADMIN') %}
+                    {#admin#}
+                    <li><a href="#" id="Gestion_user_bib"><i class="fa fa-user"></i> <span>Gestion agent bib</span></a>
                     </li>
+                    <li><a href="#" id="Gestion_user_email"><i class="fa fa-user"></i> <span>Gestion agent email</span></a>
+                    </li>
+                    {% endif %}
 
+                    {% if is_granted('ROLE_BIB') or is_granted('ROLE_ADMIN')  %}
+                    {#bib#}
+                    <li class="treeview active">
+                        <a>
+                            <i class="fa fa-book"></i> <span>Demande information-Bib</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#" id="Gestion_demande"><i class="fa fa-circle-o">
+                                    </i> gestion demande</a></li>
+                            <li><a href="#" id="Gestion_demandeur"><i class="fa fa-circle-o">
+                                    </i> gestion demandeur</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_EMAIL') or is_granted('ROLE_ADMIN')  %}
+                    {#resp email#}
+                    <li class="treeview active">
+                        <a>
+                            <i class="fa fa-envelope"></i> <span>Demande information-Email</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#" id="Gestion_demande_resp"><i class="fa fa-circle-o">
+                                    </i> gestion demande</a></li>
+                            <li><a href="#" id="Gestion_demandeur_resp"><i class="fa fa-circle-o">
+                                    </i> gestion demandeur</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
                 </ul>
 
 
@@ -88,7 +147,6 @@
                         <div id="central">
                         </div>
                         <!-- Your Page Content Here -->
-
                     </section>
                 </div>
             </div>
@@ -107,7 +165,7 @@
     </div>
 {% endblock %}
 
-    {% block js %}7
+    {% block js %}
         <script type="text/javascript">
             $(document).ready(function () {
 
@@ -177,6 +235,44 @@
                     $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
                     $.ajax({
                         url: '{{ path('res_demandeur') }}',
+                        type: 'POST',
+                        dataType: 'html',
+                        success: function (code_html, statut) {
+                            $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
+                        },
+                        error: function (resultat, statut, erreur) {
+                        },
+
+                        complete: function (resultat, statut) {
+                        }
+                    });
+
+                });
+
+                $("#Gestion_user_bib").click(function () {
+
+                    $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
+                    $.ajax({
+                        url: '{{ path('user_index_bib') }}',
+                        type: 'POST',
+                        dataType: 'html',
+                        success: function (code_html, statut) {
+                            $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
+                        },
+                        error: function (resultat, statut, erreur) {
+                        },
+
+                        complete: function (resultat, statut) {
+                        }
+                    });
+
+                });
+
+                $("#Gestion_user_email").click(function () {
+
+                    $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
+                    $.ajax({
+                        url: '{{ path('user_index_resp') }}',
                         type: 'POST',
                         dataType: 'html',
                         success: function (code_html, statut) {

@@ -1,91 +1,44 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="fr">
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('backend/assets/images/favicon.png') }}">
-    <title>Se connecter</title>
-    <!-- Custom CSS -->
-    <link href="{{ asset('backend/dist/css/style.min.css') }}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Gestion Demande | Log in</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+    <!-- Font Awesome Icons -->
+    <link href="{{ asset('Ipi/font-awesome-4.3.0/css/font-awesome.css') }}" rel="stylesheet" type="text/css" />
+
+    <link href="{{ asset('Ipi/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('Ipi/bootstrap/css/theme.bootstrap.css') }}" rel="stylesheet">
+
+    <!-- Theme style -->
+    <link href="{{ asset('Ipi/dist/css/AdminLTE.min.css') }}" rel="stylesheet">
+
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="{{ asset('Ipi/dist/css/skins/_all-skins.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('Ipi/dist/css/jquery.appendGrid-1.6.2.css') }}" rel="stylesheet">
+
+    <!--  pager  -->
+    <link href="{{ asset('Ipi/pager/jquery.tablesorter.pager.css') }}" rel="stylesheet" type="text/css" />
+
 
 </head>
+<body class="login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <span><b>Authentification</b><br>Demande Information</span>
+    </div><!-- /.login-logo -->
+    {{ include('@FOSUser/Security/login_content.html.twig') }}
+</div><!-- /.login-box -->
 
-<body>
-<div class="main-wrapper">
+<!-- jQuery 2.2.0 -->
+<script type="text/javascript" src="{{ asset('Ipi/plugins/jQuery/jQuery-2.2.0.min.js') }}"></script>
+<!-- Bootstrap 3.3.6 -->
 
-    <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
-        </div>
-    </div>
 
-    <div class="auth-wrapper d-flex no-block justify-content-center align-items-center"
-         style="background:url({{ asset('backend/assets/images/big/auth-bg.jpg') }}) no-repeat center center;">
-        <div class="auth-box">
-            <div id="loginform">
-                <div class="logo">
-                    <span class="db"><img src="{{ asset('backend/assets/images/logos/logo-icon.png') }}"
-                                          alt="logo"/></span>
-                    <h5 class="font-medium mb-3">Se connecter</h5>
-                </div>
-                <!-- Form -->
-                {{ include('@FOSUser/Security/login_content.html.twig') }}
-            </div>
-            <div id="recoverform">
-                <div class="logo">
-                    <span class="db"><img src="{{ asset('backend/assets/images/logos/logo-icon.png') }}"
-                                          alt="logo"/></span>
-                    <h5 class="font-medium mb-3">Récupérer mot de passe</h5>
-                    <span>Entrez votre email et les instructions vous seront envoyées!</span>
-                </div>
-                <div class="row mt-3">
-                    <!-- Form -->
-                    <form class="col-12"
-                          action="https://wrappixel.com/ampleadmin/ampleadmin-html/ampleadmin-sidebar/index.html">
-                        <!-- email -->
-                        <div class="form-group row">
-                            <div class="col-12">
-                                <input class="form-control form-control-lg" type="email" required=""
-                                       placeholder="Username">
-                            </div>
-                        </div>
-                        <!-- pwd -->
-                        <div class="row mt-3">
-                            <div class="col-12">
-                                <button class="btn btn-block btn-lg btn-danger" type="submit" name="action">
-                                    Réinitialiser
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<script type="text/javascript" src="{{ asset('Ipi/bootstrap/js/bootstrap.min.js') }}"></script>
 
-<script src="{{ asset('backend/assets/libs/jquery/dist/jquery.min.js') }}"></script>
-<!-- Bootstrap tether Core JavaScript -->
-<script src="{{ asset('backend/assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
-<script src="{{ asset('backend/assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-<!-- ============================================================== -->
-<!-- This page plugin js -->
-<!-- ============================================================== -->
-<script>
-    $('[data-toggle="tooltip"]').tooltip();
-    $(".preloader").fadeOut();
-    // ==============================================================
-    // Login and Recover Password
-    // ==============================================================
-    $('#to-recover').on("click", function () {
-        $("#loginform").slideUp();
-        $("#recoverform").fadeIn();
-    });
-</script>
 </body>
 </html>

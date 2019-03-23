@@ -117,9 +117,9 @@
 
                 $("#Gestion_demande").click(function () {
 
-                    $("#central").html('<center><img src="../Ipi/dist/img/ajax-loader.gif" ><br><b>Patientez...</b></center>');
+                    $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
                     $.ajax({
-                        url: 'bib/demande',
+                        url: '{{ path('bib_demande') }}',
                         type: 'POST',
                         dataType: 'html',
                         success: function (code_html, statut) {
@@ -136,9 +136,9 @@
 
                 $("#Gestion_demandeur").click(function () {
 
-                    $("#central").html('<center><img src="../Ipi/dist/img/ajax-loader.gif" ><br><b>Patientez...</b></center>');
+                    $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
                     $.ajax({
-                        url: 'bib/demandeur',
+                        url: '{{ path('bib_demandeur') }}',
                         type: 'POST',
                         dataType: 'html',
                         success: function (code_html, statut) {
@@ -155,9 +155,9 @@
 
                 $("#Gestion_demande_resp").click(function () {
 
-                    $("#central").html('<center><img src="../Ipi/dist/img/ajax-loader.gif" ><br><b>Patientez...</b></center>');
+                    $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
                     $.ajax({
-                        url: 'responsible/demande',
+                        url: '{{ path('res_demande') }}',
                         type: 'POST',
                         dataType: 'html',
                         success: function (code_html, statut) {
@@ -174,9 +174,9 @@
 
                 $("#Gestion_demandeur_resp").click(function () {
 
-                    $("#central").html('<center><img src="../Ipi/dist/img/ajax-loader.gif" ><br><b>Patientez...</b></center>');
+                    $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
                     $.ajax({
-                        url: 'responsible/demandeur',
+                        url: '{{ path('res_demandeur') }}',
                         type: 'POST',
                         dataType: 'html',
                         success: function (code_html, statut) {

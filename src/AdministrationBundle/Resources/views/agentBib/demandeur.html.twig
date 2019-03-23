@@ -117,14 +117,10 @@
             })
         };
 
-        function submitForm(){
-            $('.formDemande').submit();
-        }
-
         function submitDemande() {
-            $("#adddemande").html('<center><br><br><img src="../Ipi/dist/img/ajax-loader.gif" ><br><b>Patientez...</b><br><br><br></center>');
+            $("#adddemande").html('<center><br/><br/><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b><br/><br/></center>');
             $.ajax({
-                url: 'bib/newdemande',
+                url: '{{ path('demande_new') }}',
                 type: 'POST',
                 dataType: 'html',
                 success: function (code_html, statut) {
@@ -139,9 +135,9 @@
         }
 
         function submitDemandeDate(start, end) {
-            $("#demandedate").html('<center><br><br><img src="../Ipi/dist/img/ajax-loader.gif" ><br><b>Patientez...</b><br><br><br></center>');
+            $("#demandedate").html('<center><br/><br/><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b><br/><br/></center>');
             $.ajax({
-                url: 'bib/demandeur/date',
+                url: '{{ path('bib_demandeur_date') }}',
                 type: 'POST',
                 data: {
                     start : start,

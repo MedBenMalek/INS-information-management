@@ -8,11 +8,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+/**
+ * User controller.
+ *
+ * @Route("admin")
+ */
 
 class AdministrationController extends Controller
 {
     /**
-     * @Route("/login", name="login_page")
+     * @Route("/", name="login_page")
      */
     public function loginAction(Request $request)
     {
@@ -20,7 +25,7 @@ class AdministrationController extends Controller
     }
 
     /**
-     * @Route("bib/demandeur")
+     * @Route("bib/demandeur", name="bib_demandeur")
      */
     public function demandeurAction(Request $request)
     {
@@ -32,7 +37,7 @@ class AdministrationController extends Controller
     }
 
     /**
-     * @Route("bib/demande/delete/{id}")
+     * @Route("bib/demande/delete/{id}", name="bib_demandeur_delete")
      */
     public function demandeurDeleteAction(Request $request, $id)
     {
@@ -49,7 +54,7 @@ class AdministrationController extends Controller
     }
 
     /**
-     * @Route("bib/demandeur/date")
+     * @Route("bib/demandeur/date", name="bib_demandeur_date")
      */
     public function demandeurDateAction(Request $request)
     {
@@ -82,7 +87,7 @@ class AdministrationController extends Controller
     }
 
     /**
-     * @Route("bib/demande")
+     * @Route("bib/demande", name="bib_demande")
      */
     public function demandeAction(Request $request)
     {
@@ -93,7 +98,7 @@ class AdministrationController extends Controller
     }
 
     /**
-     * @Route("responsible/demande")
+     * @Route("responsible/demande" , name="res_demande")
      */
     public function RespDemandeAction(Request $request)
     {
@@ -104,7 +109,7 @@ class AdministrationController extends Controller
     }
 
     /**
-     * @Route("responsible/demandeur")
+     * @Route("responsible/demandeur", name="res_demandeur")
      */
     public function RespDemandeurAction(Request $request)
     {

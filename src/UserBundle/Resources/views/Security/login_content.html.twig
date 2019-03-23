@@ -1,52 +1,29 @@
-<div class="row">
-    <div class="col-12">
-        {% if error %}
-            <p style="color: #f00; text-align: center;">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+<div class="login-box-body">
+    <p class="login-box-msg">Veuillez saisir votre login et votre  mot de passe </p>
+    {% if error %}
+        <p style="color: #f00; text-align: center;">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+    {% endif %}
+    <form class="form-horizontal mt-3" id="loginform"
+          method="post" action="{{ path("fos_user_security_check") }}">
+        {% if csrf_token %}
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
         {% endif %}
-        <form class="form-horizontal mt-3" id="loginform"
-              method="post" action="{{ path("fos_user_security_check") }}">
-            {% if csrf_token %}
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
-            {% endif %}
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
-                </div>
-                {#username#}
-                <input type="text" class="form-control form-control-lg" placeholder="Nom d'utilisateur" name="_username"
-                       aria-label="Username" aria-describedby="basic-addon1" value="{{ last_username }}">
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon2"><i class="ti-pencil"></i></span>
-                </div>
-                {#pwd#}
-                <input type="password" class="form-control form-control-lg" placeholder="Mot de passe"
-                       aria-label="Password" name="_password" aria-describedby="basic-addon1">
-            </div>
-            <div class="form-group row">
-                <div class="col-md-12">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="_remember_me" id="customCheck1">
-                        <label class="custom-control-label" for="customCheck1">Souviens-toi de
-                            moi</label>
-                        <a href="javascript:void(0)" id="to-recover" class="text-dark float-right"><i
-                                    class="fa fa-lock mr-1"></i> Mot de passe oublié?</a>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group text-center">
-                <div class="col-xs-12 pb-3">
-                    <button class="btn btn-block btn-lg btn-info" type="submit">S'identifier</button>
-                </div>
-            </div>
+        <div class="form-group has-feedback">
+            <input type="text" class="form-control form-control-lg" placeholder="Nom d'utilisateur" name="_username"
+                   aria-label="Username" aria-describedby="basic-addon1" value="{{ last_username }}">
+        </div>
+        <div class="form-group has-feedback">
+            <input type="password" class="form-control form-control-lg" placeholder="Mot de passe"
+                   aria-label="Password" name="_password" aria-describedby="basic-addon1">
+        </div>
+        <div class="row">
+            <div id="result" class="col-xs-8">
 
-            <div class="form-group mb-0 mt-2">
-                <div class="col-sm-12 text-center">
-                    Vous n'avez pas de compte? <a href="{{ path('homepage') }}"
-                                                  class="text-info ml-1"><b>S'inscrire</b></a>
-                </div>
-            </div>
-        </form>
-    </div>
+            </div><!-- /.col -->
+            <div class="col-xs-4">
+                <button type="submit" id="valider" class="btn btn-primary btn-block btn-flat">Valider</button>
+            </div><!-- /.col -->
+        </div>
+    </form>
+
 </div>

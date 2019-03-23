@@ -49,10 +49,10 @@
                                         <td>{{ d.firstname }}</td>
                                         <td>{{ d.lastname }}</td>
                                         <td>
-                                            <button onclick="submitDemande({{ d.id }})" class="btn btn-sm btn-success">
+                                            <button onclick="submitDemande('{{ path('demandeur_view', { 'id': d.id }) }}')" class="btn btn-sm btn-success">
                                                 Afficher
                                             </button>
-                                            <button onclick="submitDelete({{ d.id }})" class="btn btn-sm btn-danger">
+                                            <button onclick="submitDelete('{{ path('bib_demandeur_delete', { 'id': d.id }) }}')" class="btn btn-sm btn-danger">
                                                 Supprimer
                                             </button>
                                         </td>
@@ -122,10 +122,10 @@
             })
         });
 
-        function submitDemande(id) {
-            $("#detaildemandeur").html('<center><img src="../Ipi/dist/img/ajax-loader.gif" ><br><b>Patientez...</b></center>');
+        function submitDemande(path) {
+            $("#detaildemandeur").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
             $.ajax({
-                url: 'bib/demandeur/' + id,
+                url: path,
                 type: 'POST',
                 dataType: 'html',
                 success: function (code_html, statut) {
@@ -139,10 +139,10 @@
             });
         }
 
-        function submitDelete(id) {
-            $("#central").html('<center><img src="../Ipi/dist/img/ajax-loader.gif" ><br><b>Patientez...</b></center>');
+        function submitDelete(path) {
+            $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
             $.ajax({
-                url: 'bib/demande/delete/' + id,
+                url: path,
                 type: 'POST',
                 dataType: 'html',
                 success: function (code_html, statut) {

@@ -1,0 +1,55 @@
+{% extends '@Administration/Default/index_administration.html.twig' %}
+{% block contenu %}
+
+
+    <section class="content-header">
+        <h1>
+            Gerer les statistiques
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Acceuil</a></li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title">Modifier {{ stat.title }}</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {{ form_start(edit_form) }}
+                                <div class="form-row">
+                                    <div class="col-md-12 mb-12">
+                                        {{ form_label(edit_form.title, 'Titre') }}
+                                        {{ form_widget(edit_form.title, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+
+                                    <div class="col-md-12 mb-12">
+                                        <br>
+                                        {{ form_label(edit_form.demandeur, 'Demandeur') }}
+                                        {{ form_widget(edit_form.demandeur, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                </div>
+                                <div class="row text-center">
+                                    <div class="col-md-12">
+                                        <br/>
+                                        <input class="btn btn-primary btn-lg" type="submit" value="Valider" />
+                                    </div>
+                                </div>
+                                {{ form_row(edit_form._token) }}
+                                {{ form_end(edit_form, {'render_rest': false}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

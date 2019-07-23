@@ -47,6 +47,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- daterange picker -->
     <link rel="stylesheet" href="{{ asset('Ipi/plugins/bootstrap-daterangepicker/daterangepicker.css') }}">
 
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -55,13 +56,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </body>
 
 <!-- jQuery 2.2.0 -->
-<script type="text/javascript" src="{{ asset('Ipi/plugins/jQuery/jQuery-2.2.0.min.js') }}"></script>
+<script src="{{ asset('Ipi/dist/js/jquery/dist/jquery.min.js') }}"></script>
+
 <!-- Bootstrap 3.3.6 -->
 
 
 <script type="text/javascript" src="{{ asset('Ipi/bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script type="text/javascript" src="{{ asset('Ipi/dist/js/app.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('Ipi/dist/js/app/app.init.js') }}"></script>
+<script type="text/javascript" src="{{ asset('Ipi/dist/js/app/app.min.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('Ipi/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <script type="text/javascript" src="{{ asset('Ipi/plugins/moment/min/moment.min.js') }}"></script>
@@ -105,6 +109,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script type="text/javascript" src="{{ asset('Ipi/pager/widgets/widget-print.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('Ipi/dist/js/alertify.js') }}"></script>
+
+<script src="{{ asset('Ipi/dist/js/repeater.js') }}"></script>
+<script src="{{ asset('Ipi/dist/js/custom.js') }}"></script>
+<script src="{{ asset('Ipi/dist/js/jqbootstrapvalidation/validation.js') }}"></script>
+<script src="{{ asset('Ipi/dist/js/jquery.repeater/jquery.repeater.min.js') }}"></script>
 {% block js %}{% endblock %}
 
 </html>

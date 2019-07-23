@@ -347,6 +347,10 @@ class seekersBib
         $this->cle = $cle;
     }
 
+    public function __toString() {
+        return $this->firstname;
+    }
+
 
 
 }

@@ -1,0 +1,59 @@
+{% extends '@Administration/Default/index_administration.html.twig' %}
+{% block contenu %}
+<section class="content-header">
+    <h1>
+        Gerer les actualites
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Acceuil</a></li>
+    </ol>
+
+
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+        <!-- Box Comment -->
+        <div class="box box-success">
+            <div class="box-header">
+                <div class="row">
+                    <div class="col-md-11">
+                        <h3 class="box-title">{{ post.title }}</h3>
+                    </div>
+                    <div class="col-md-1">
+
+                        <a class="btn btn-sm btn-danger"  href="{{ path('deletePost', { 'id': post.id }) }}) }}"> Supprimer</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-header with-border">
+                <div class="user-block">
+                    <img class="img-circle" src="{{ asset('Ipi/dist/img/user7-128x128.jpg') }}" alt="User Image">
+                    <span class="username"><a href="#">user</a></span>
+                    <span class="description">date</span>
+                </div>
+                <!-- /.user-block -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <!-- post text -->
+
+                <p>{{ post.body }}</p>
+
+                <!-- Attachment -->
+                <div class="attachment-block clearfix">
+                    <img class="attachment-img" src="{{ asset('Ipi/dist/img/photo1.png') }}" alt="Attachment Image">
+                </div>
+                <!-- /.attachment-block -->
+
+            </div>
+            <!-- /.box-body -->
+
+        </div>
+        <!-- /.box -->
+    </div>
+    </div>
+</section>
+{% endblock %}

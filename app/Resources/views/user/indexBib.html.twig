@@ -1,182 +1,111 @@
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>
-        List des utilisateurs
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Acceuil</a></li>
-        <li><a href="{{ path('homepage') }}">Tableau de bord</a></li>
-        <li class="active">List des utilisateurs</li>
-    </ol>
-</section>
+{% extends ':parent:base.html.twig' %}
+{% block title %}liste de utilisateurs{% endblock %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="page-breadcrumb border-bottom">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
+                <h5 class="font-medium text-uppercase mb-0">List des utilisateurs</h5>
+            </div>
+            <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
+                <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
+                    <ol class="breadcrumb mb-0 justify-content-end p-0">
+                        <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Tableau de bord</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
 
-<section class="content">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="box box-success">
-                <div class="box-header">
-                    <h3 class="box-title">Liste des demandes</h3>
-                </div>
-                <div class="box-body">
-                    <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                        <div class="row">
-                            <div class="col-sm-12 text-center">
-                                <button onclick="adduser('{{ path('user_new_bib') }}')" type="button" class="btn bg-purple margin">
-                                    <i class="fa fa-plus margin"></i>
-                                    Ajouter utilisateur
-                                </button>
-                            </div>
+
+    <div class="page-content container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="material-card card">
+                    <div class="card-body">
+                        <div class="text-right" style="margin-bottom: 25px">
+                            <a href="{{ path('user_new_bib') }}" class="btn btn-success">
+                                <i class="mdi mdi-plus text"></i>
+                                <span class="text">Ajouter utilisateur</span>
+                            </a>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <table id="example2" class="table table-bordered table-hover dataTable" role="grid"
-                                       aria-describedby="example2_info">
-                                    <thead>
-                                    <tr role="row">
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">nom
-                                        </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">Prenom
-                                        </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">Email
-                                        </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">Tel
-                                        </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">Address
-                                        </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">
-                                            Status
-                                        </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">Actions
-                                        </th>
-                                    </thead>
-                                    <tbody>
-                                    {% for user in users %}
-                                        <tr>
-                                            <td>{{ user.firstname }}</td>
-                                            <td>{{ user.lastname }}</td>
-                                            <td>{{ user.email }}</td>
-                                            <td>{{ user.phone }}</td>
-                                            <td>{{ user.address }}</td>
-                                            <td>{% if user.enabled %}
-                                                    <span class="text-uppercase text-white font-medium label label-success">Activer</span>
-                                                {% else %}
-                                                    <span class="text-uppercase text-white font-medium label label-danger">Non activer</span>
-                                                {% endif %}
-                                            </td>
-                                            <td>
-                                                <button href="{{ path('user_show', { 'id': user.id }) }}"
-                                                        onclick="showuser('{{ path('user_show', { 'id': user.id}) }}')"
-                                                        class="btn btn-purple btn-sm">
+                        <div class="table-responsive">
+                            <table id="table_default" class="table table-striped border">
+                                <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Prenom</th>
+                                    <th>Email</th>>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for user in users %}
+                                    <tr>
+                                        <td>{{ user.firstname }}</td>
+                                        <td>{{ user.lastname }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{% if user.enabled %}
+                                                <span class="badge badge-pill text-uppercase text-white font-medium badge-success">Activer</span>
+                                            {% else %}
+                                                <span class="badge badge-pill text-uppercase text-white font-medium badge-danger">Non activer</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <button onclick="showUser('{{ path('user_show', { 'id': user.id }) }}')"
+                                                    class="btn btn-purple btn-sm">
+                                                <i class="mdi mdi-eye"></i>
+                                                <span>Afficher</span>
+                                            </button>
+                                            <a href="{{ path('user_edit', { 'id': user.id }) }}"
+                                               class="btn btn-info btn-sm">
+                                                <i class="mdi mdi-pencil"></i>
+                                                <span>Modifier</span>
+                                            </a>
+                                            <button onclick="DeleteUser('{{ path('user_delete', { 'id': user.id , 'role': 'resp' }) }}','{{ user.firstname }} {{ user.lastname }}')"
+                                                    class="btn btn-danger btn-sm">
+                                                <i class="mdi mdi-delete"></i>
+                                                <span>Supprimer</span>
+                                            </button>
+                                            {% if user.enabled %}
+                                                <a href="{{ path('user_activate', { 'id': user.id ,'role': 'resp' }) }}"
+                                                   class="btn btn-warning btn-sm">
                                                     <i class="mdi mdi-eye"></i>
-                                                    <span>Afficher</span>
-                                                </button>
-                                                <button onclick="edituser('{{ path('user_edit', { 'id': user.id}) }}')"
-                                                        class="btn btn-info btn-sm">
-                                                    <i class="mdi mdi-pencil"></i>
-                                                    <span>Modifier</span>
-                                                </button>
-                                                <button onclick="deleteuser('{{ path('user_delete', { 'id': user.id, 'role': 'bib' }) }}')"
-                                                        class="btn btn-danger btn-sm">
-                                                    <i class="mdi mdi-delete"></i>
-                                                    <span>Supprimer</span>
-                                                </button>
-                                                {% if user.enabled %}
-                                                    <button onclick="adduser('{{ path('user_activate', { 'id': user.id, 'role': 'bib' }) }}')"Activate
-                                                            class="btn btn-success btn-sm">
-                                                        <i class="mdi mdi-pencil"></i>
-                                                        <span>désactivée</span>
-                                                    </button>
-                                                {% else %}
-                                                    <button onclick="adduser('{{ path('user_activate', { 'id': user.id, 'role': 'dib' }) }}')"Activate
-                                                            class="btn btn-success btn-sm">
-                                                        <i class="mdi mdi-pencil"></i>
-                                                        <span>Activate</span>
-                                                    </button>
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
+                                                    <span>Desactivé</span>
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ path('user_activate', { 'id': user.id ,'role': 'resp' }) }}"
+                                                   class="btn btn-success btn-sm">
+                                                    <i class="mdi mdi-eye"></i>
+                                                    <span>Acitivé</span>
+                                                </a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-                <!-- /.box-body -->
             </div>
-            <!-- /.box -->
         </div>
-        <!-- /.col -->
+        <div class="row" id="central"></div>
     </div>
-    <!-- /.row -->
-    <div class="row" id="usershow"></div>
-</section>
+</div>
+{% endblock %}
 
-
-{% block js %}
+{% block javascripts %}
     <script>
-        $(function () {
-            $('#example2').DataTable({
-                "pageLength": 5,
-                'paging': true,
-                'lengthChange': false,
-                'searching': true,
-                'ordering': true,
-                'info': true,
-                'autoWidth': true,
-                "language": {
-                    "sEmptyTable": "Aucune donnée disponible dans le tableau",
-                    "sInfo": "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
-                    "sInfoEmpty": "Affichage de l'élément 0 à 0 sur 0 élément",
-                    "sInfoFiltered": "(filtré à partir de _MAX_ éléments au total)",
-                    "sInfoPostFix": "",
-                    "sInfoThousands": ",",
-                    "sLengthMenu": "Afficher _MENU_ éléments",
-                    "sLoadingRecords": "Chargement...",
-                    "sProcessing": "Traitement...",
-                    "sSearch": "Rechercher :",
-                    "sZeroRecords": "Aucun élément correspondant trouvé",
-                    "oPaginate": {
-                        "sFirst": "Premier",
-                        "sLast": "Dernier",
-                        "sNext": "Suivant",
-                        "sPrevious": "Précédent"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": activer pour trier la colonne par ordre croissant",
-                        "sSortDescending": ": activer pour trier la colonne par ordre décroissant"
-                    },
-                    "select": {
-                        "rows": {
-                            "_": "%d lignes sélectionnées",
-                            "0": "Aucune ligne sélectionnée",
-                            "1": "1 ligne sélectionnée"
-                        }
-                    }
-                }
-            })
-        });
+        function showUser(path) {
 
-        function showuser(path) {
-
-            $("#usershow").html(`
+            $('#central').html(`
                 <div class="col-12 text-center" style="margin-top: 100px">
-                       <img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" >
-                    <br><br>
+                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
                 </div>
                `);
 
@@ -185,17 +114,11 @@
                 type: 'POST',
                 dataType: 'html',
                 success: function (code_html, statut) {
-                    $("#usershow").html(`
-                    <div class="col-xs-12">
-                    <div class="box box-warning">
-                         <div class="box-header">
-                         </div>
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    ` + code_html + `
-                                </div>
-                            </div>
+                    $("#central").html(`
+                    <div class="col-12">
+                    <div class="material-card card">
+                        <div class="card-body">
+                            ` + code_html + `
                         </div>
                     </div>
                 </div>
@@ -207,79 +130,38 @@
                 complete: function (resultat, statut) {
                 }
             });
-        };
+        }
 
-        function edituser(path) {
-
-            $("#central").html(`
-                <div class="col-12 text-center" style="margin-top: 100px">
-                       <img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" >
-                    <br><br>
-                </div>
-               `);
-
-            $.ajax({
-                url: path,
-                type: 'POST',
-                dataType: 'html',
-                success: function (code_html, statut) {
-                    $("#central").html(code_html);
-                },
-                error: function (resultat, statut, erreur) {
-                },
-
-                complete: function (resultat, statut) {
+        function DeleteUser(path, name) {
+            swal({
+                title: 'Êtes-vous sûr?',
+                text: 'supprimer l\'utilisateur ' + name + ". Vous ne pourrez pas revenir en arrière!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Oui, supprimer',
+                cancelButtonText: 'Annuler!',
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: path,
+                        type: 'POST',
+                        dataType: 'html',
+                        success: function (code_html, statut) {
+                        },
+                        error: function (resultat, statut, erreur) {
+                        },
+                        complete: function (resultat, statut) {
+                            location.reload();
+                        }
+                    });
+                    swal(
+                        'Supprimé avec succès',
+                        'L\'utilisateur  ' + name + ' a été supprimé.',
+                        'success'
+                    )
                 }
-            });
-        };
-
-        function deleteuser(path) {
-
-            $("#central").html(`
-                <div class="col-12 text-center" style="margin-top: 100px">
-                       <img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" >
-                    <br><br>
-                </div>
-               `);
-
-            $.ajax({
-                url: path,
-                type: 'POST',
-                dataType: 'html',
-                success: function (code_html, statut) {
-                    $("#central").html(code_html);
-                },
-                error: function (resultat, statut, erreur) {
-                },
-
-                complete: function (resultat, statut) {
-                }
-            });
-        };
-
-        function adduser(path) {
-
-            $("#central").html(`
-                <div class="col-12 text-center" style="margin-top: 100px">
-                       <img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" >
-                    <br><br>
-                </div>
-               `);
-
-            $.ajax({
-                url: path,
-                type: 'POST',
-                dataType: 'html',
-                success: function (code_html, statut) {
-                    $("#central").html(code_html);
-                },
-                error: function (resultat, statut, erreur) {
-                },
-
-                complete: function (resultat, statut) {
-                }
-            });
-        };
-
+            })
+        }
     </script>
 {% endblock %}

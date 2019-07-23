@@ -1,0 +1,110 @@
+<aside class="left-sidebar">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li class="sidebar-item">
+                            <span class="sidebar-link waves-dark profile-dd">
+                                <img src="{{ asset('backend/assets/images/users/1.jpg') }}" alt="user" class="rounded-circle ml-2" width="30">
+                                <span>{{ app.user.firstname }} {{ app.user.lastname }} | {% if is_granted('ROLE_ADMIN') %}Adminstrateur {% else %} Responsable {% endif %} </span>
+                            </span>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="{{ path('admin_index') }}" aria-expanded="false">
+                        <i class="mdi mdi-av-timer"></i>
+                        <span class="hide-menu">Tableau de bord</span>
+                    </a>
+                </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
+                       aria-expanded="false">
+                        <i class="mdi mdi-account"></i>
+                        <span class="hide-menu">Utilisateurs</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="{{ path('user_index_bib') }}" class="sidebar-link">
+                                <i class="mdi mdi-cards-variant"></i>
+                                <span class="hide-menu">list utilisateurs</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ path('user_new_bib') }}" class="sidebar-link">
+                                <i class="mdi mdi-cart"></i>
+                                <span class="hide-menu">Ajouter utilisateur</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
+                           aria-expanded="false">
+                            <i class="fa fa-trophy"></i>
+                            <span class="hide-menu">Demandes</span>
+                        </a>
+                        <ul aria-expanded="false" class="collapse first-level">
+                            <li class="sidebar-item">
+                                <a href="{{ path('bib_demande') }}" class="sidebar-link">
+                                    <i class="mdi mdi-cards-variant"></i>
+                                    <span class="hide-menu">list demandes</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ path('bib_demandeur') }}" class="sidebar-link">
+                                    <i class="mdi mdi-cart"></i>
+                                    <span class="hide-menu">Ajouter demande</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
+                       aria-expanded="false">
+                        <i class="mdi mdi-medium"></i>
+                        <span class="hide-menu">Actualités</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="{{ path('post_index') }}" class="sidebar-link">
+                                <i class="mdi mdi-cards-variant"></i>
+                                <span class="hide-menu">List actualités</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ path('post_new') }}" class="sidebar-link">
+                                <i class="mdi mdi-cards-variant"></i>
+                                <span class="hide-menu">Ajouter actualités</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
+                       aria-expanded="false">
+                        <i class="mdi mdi-cards"></i>
+                        <span class="hide-menu">Statistiques</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="{{ path('stat_index') }}" class="sidebar-link">
+                                <i class="mdi mdi-cards-variant"></i>
+                                <span class="hide-menu">List Statistiques</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>

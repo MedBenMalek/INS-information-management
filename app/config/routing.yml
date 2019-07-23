@@ -1,3 +1,11 @@
+administration_stat:
+    resource: "@AdministrationBundle/Controller/statController.php"
+    type:     annotation
+
+administration_post:
+    resource: "@AdministrationBundle/Controller/postController.php"
+    type:     annotation
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation

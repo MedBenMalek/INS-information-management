@@ -1,0 +1,43 @@
+{% extends '@Administration/Default/index_administration.html.twig' %}
+{% block contenu %}
+
+    <section class="content-header">
+        <h1>
+            Gerer les statistiques
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Acceuil</a></li>
+        </ol>
+
+
+    </section>
+
+    <h1>Stat</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ stat.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ stat.title }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('stat_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('stat_edit', { 'id': stat.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

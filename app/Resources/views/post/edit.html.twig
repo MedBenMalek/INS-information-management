@@ -1,0 +1,53 @@
+{% extends ':parent:base.html.twig' %}
+{% block title %}Modifier l'actualité {{ post.title }}{% endblock %}
+{% block body %}
+    <div class="page-wrapper">
+        <div class="page-breadcrumb border-bottom">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
+                    <h5 class="font-medium text-uppercase mb-0">Modifier l'actualité {{ post.title }}</h5>
+                </div>
+                <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
+                    <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
+                        <ol class="breadcrumb mb-0 justify-content-end p-0">
+                            <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Tableau de bord</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Modifier l'actualité {{ post.title }}</h4>
+                    {{ form_start(edit_form) }}
+                    <div class="form-row">
+                        <div class="col-md-12 mb-12">
+                            {{ form_label(edit_form.title, 'Titre') }}
+                            {{ form_widget(edit_form.title, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="col-md-12 mb-12">
+                            <br>
+                            {{ form_label(edit_form.body, 'Contenu') }}
+                            {{ form_widget(edit_form.body, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-md-12">
+                            <br/>
+                            <input class="btn btn-primary btn-lg" type="submit" value="Create" />
+                        </div>
+                    </div>
+                    {{ form_row(edit_form._token) }}
+                    {{ form_end(edit_form, {'render_rest': false}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

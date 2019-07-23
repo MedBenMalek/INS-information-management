@@ -47,7 +47,6 @@
                                         <small>
                                             {% if is_granted('ROLE_ADMIN') %}Adminstrateur {% endif %}
                                             {% if is_granted('ROLE_BIB') %} Agent Bibliotheque {% endif %}
-                                            {% if is_granted('ROLE_EMAIL') %} Agent Email {% endif %}
                                         </small>
                                     </p>
                                 </li>
@@ -81,8 +80,7 @@
                         <p style="margin-top: 10px">{{ app.user.firstname }} {{ app.user.lastname }} </p>
                             <small>
                                 {% if is_granted('ROLE_ADMIN') %}Adminstrateur {% endif %}
-                                {% if is_granted('ROLE_BIB') %} Agent Bibliotheque {% endif %}
-                                {% if is_granted('ROLE_EMAIL') %} Agent Email {% endif %}
+                                {% if is_granted('ROLE_BIB') %} Agent {% endif %}
                             </small>
                     </div>
                 </div>
@@ -92,9 +90,7 @@
 
                     {% if is_granted('ROLE_ADMIN') %}
                     {#admin#}
-                    <li><a href="#" id="Gestion_user_bib"><i class="fa fa-user"></i> <span>Gestion agent bib</span></a>
-                    </li>
-                    <li><a href="#" id="Gestion_user_email"><i class="fa fa-user"></i> <span>Gestion agent email</span></a>
+                    <li><a href="#" id="Gestion_user_bib"><i class="fa fa-user"></i> <span>Gerer les responsables</span></a>
                     </li>
                     {% endif %}
 
@@ -102,31 +98,41 @@
                     {#bib#}
                     <li class="treeview active">
                         <a>
-                            <i class="fa fa-book"></i> <span>Demande information-Bib</span>
+                            <i class="fa fa-book"></i> <span>Gerer les demandes</span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#" id="Gestion_demande"><i class="fa fa-circle-o">
-                                    </i> gestion demande</a></li>
+                            <li><a href="#" id="List_demandes"><i class="fa fa-circle-o">
+                                    </i> List demandes</a></li>
                             <li><a href="#" id="Gestion_demandeur"><i class="fa fa-circle-o">
-                                    </i> gestion demandeur</a></li>
+                                    </i> Recherche demande</a></li>
                         </ul>
                     </li>
                     {% endif %}
 
-                    {% if is_granted('ROLE_EMAIL') or is_granted('ROLE_ADMIN')  %}
-                    {#resp email#}
                     <li class="treeview active">
                         <a>
-                            <i class="fa fa-envelope"></i> <span>Demande information-Email</span>
+                            <i class="fa fa-newspaper-o"></i> <span>Gerer les actualités</span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#" id="Gestion_demande_resp"><i class="fa fa-circle-o">
-                                    </i> gestion demande</a></li>
-                            <li><a href="#" id="Gestion_demandeur_resp"><i class="fa fa-circle-o">
-                                    </i> gestion demandeur</a></li>
+                            <li><a href="{{ path('post_index') }}"><i class="fa fa-circle-o">
+                                    </i> List actualités</a></li>
+                            <li><a href="{{ path('post_new') }}"><i class="fa fa-circle-o">
+                                    </i> Ajouter actualités</a></li>
                         </ul>
                     </li>
-                    {% endif %}
+
+                    <li class="treeview active">
+                        <a>
+                            <i class="fa fa-dashboard"></i> <span>Gerer les statistiques</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#" id="Gestion_demande"><i class="fa fa-circle-o">
+                                    </i> List statistique</a></li>
+                            <li><a href="#" id="Gestion_demandeur"><i class="fa fa-circle-o">
+                                    </i> Ajouter statistique</a></li>
+                        </ul>
+                    </li>
+
                 </ul>
 
 
@@ -145,6 +151,7 @@
                 <div class="col-md-12">
                     <section class="content">
                         <div id="central">
+                            {% block contenu %}{% endblock %}
                         </div>
                         <!-- Your Page Content Here -->
                     </section>
@@ -165,128 +172,129 @@
     </div>
 {% endblock %}
 
-    {% block js %}
-        <script type="text/javascript">
-            $(document).ready(function () {
 
-                $("#logout").click(function () {
-                    location.href = "logout";
-                });
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
 
-                $("#Gestion_demande").click(function () {
+            $("#logout").click(function () {
+                location.href = "logout";
+            });
 
-                    $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
-                    $.ajax({
-                        url: '{{ path('bib_demande') }}',
-                        type: 'POST',
-                        dataType: 'html',
-                        success: function (code_html, statut) {
-                            $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
-                        },
-                        error: function (resultat, statut, erreur) {
-                        },
+            $("#List_demandes").click(function () {
 
-                        complete: function (resultat, statut) {
-                        }
-                    });
+                $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
+                $.ajax({
+                    url: '{{ path('bib_demande') }}',
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function (code_html, statut) {
+                        $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
+                    },
+                    error: function (resultat, statut, erreur) {
+                    },
 
-                });
-
-                $("#Gestion_demandeur").click(function () {
-
-                    $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
-                    $.ajax({
-                        url: '{{ path('bib_demandeur') }}',
-                        type: 'POST',
-                        dataType: 'html',
-                        success: function (code_html, statut) {
-                            $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
-                        },
-                        error: function (resultat, statut, erreur) {
-                        },
-
-                        complete: function (resultat, statut) {
-                        }
-                    });
-
-                });
-
-                $("#Gestion_demande_resp").click(function () {
-
-                    $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
-                    $.ajax({
-                        url: '{{ path('res_demande') }}',
-                        type: 'POST',
-                        dataType: 'html',
-                        success: function (code_html, statut) {
-                            $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
-                        },
-                        error: function (resultat, statut, erreur) {
-                        },
-
-                        complete: function (resultat, statut) {
-                        }
-                    });
-
-                });
-
-                $("#Gestion_demandeur_resp").click(function () {
-
-                    $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
-                    $.ajax({
-                        url: '{{ path('res_demandeur') }}',
-                        type: 'POST',
-                        dataType: 'html',
-                        success: function (code_html, statut) {
-                            $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
-                        },
-                        error: function (resultat, statut, erreur) {
-                        },
-
-                        complete: function (resultat, statut) {
-                        }
-                    });
-
-                });
-
-                $("#Gestion_user_bib").click(function () {
-
-                    $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
-                    $.ajax({
-                        url: '{{ path('user_index_bib') }}',
-                        type: 'POST',
-                        dataType: 'html',
-                        success: function (code_html, statut) {
-                            $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
-                        },
-                        error: function (resultat, statut, erreur) {
-                        },
-
-                        complete: function (resultat, statut) {
-                        }
-                    });
-
-                });
-
-                $("#Gestion_user_email").click(function () {
-
-                    $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
-                    $.ajax({
-                        url: '{{ path('user_index_resp') }}',
-                        type: 'POST',
-                        dataType: 'html',
-                        success: function (code_html, statut) {
-                            $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
-                        },
-                        error: function (resultat, statut, erreur) {
-                        },
-
-                        complete: function (resultat, statut) {
-                        }
-                    });
-
+                    complete: function (resultat, statut) {
+                    }
                 });
 
             });
-        </script>
-    {% endblock %}
+
+            $("#Gestion_demandeur").click(function () {
+
+                $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
+                $.ajax({
+                    url: '{{ path('bib_demandeur') }}',
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function (code_html, statut) {
+                        $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
+                    },
+                    error: function (resultat, statut, erreur) {
+                    },
+
+                    complete: function (resultat, statut) {
+                    }
+                });
+
+            });
+
+            $("#Gestion_demande_resp").click(function () {
+
+                $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
+                $.ajax({
+                    url: '{{ path('res_demande') }}',
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function (code_html, statut) {
+                        $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
+                    },
+                    error: function (resultat, statut, erreur) {
+                    },
+
+                    complete: function (resultat, statut) {
+                    }
+                });
+
+            });
+
+            $("#Gestion_demandeur_resp").click(function () {
+
+                $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
+                $.ajax({
+                    url: '{{ path('res_demandeur') }}',
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function (code_html, statut) {
+                        $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
+                    },
+                    error: function (resultat, statut, erreur) {
+                    },
+
+                    complete: function (resultat, statut) {
+                    }
+                });
+
+            });
+
+            $("#Gestion_user_bib").click(function () {
+
+                $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
+                $.ajax({
+                    url: '{{ path('user_index_bib') }}',
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function (code_html, statut) {
+                        $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
+                    },
+                    error: function (resultat, statut, erreur) {
+                    },
+
+                    complete: function (resultat, statut) {
+                    }
+                });
+
+            });
+
+            $("#Gestion_user_email").click(function () {
+
+                $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
+                $.ajax({
+                    url: '{{ path('user_index_resp') }}',
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function (code_html, statut) {
+                        $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
+                    },
+                    error: function (resultat, statut, erreur) {
+                    },
+
+                    complete: function (resultat, statut) {
+                    }
+                });
+
+            });
+
+        });
+    </script>
+{% endblock %}

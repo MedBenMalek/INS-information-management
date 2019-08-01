@@ -1,0 +1,99 @@
+{% extends('front/base.html.twig') %}
+
+{% block content %}
+
+    <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-12 align-self-center p-static order-2 text-center">
+
+                    <h1 class="text-dark font-weight-bold text-8">À propos de nous</h1>
+                </div>
+
+                <div class="col-md-12 align-self-center order-1">
+
+                    <ul class="breadcrumb d-block text-center">
+                        <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                        <li class="active">À propos de nous</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container pb-1">
+
+        <div class="row pt-4">
+            <div class="col">
+                <div class="overflow-hidden mb-3">
+                    <h2 class="word-rotator-title font-weight-bold text-8 mb-0 appear-animation"
+                        data-appear-animation="maskUp">
+                        La nouvelle façon de <strong>
+										<span class="word-rotator" data-plugin-options="{'delay': 2000}">
+											<span class="word-rotator-items">
+												<span>analyse</span>
+												<span>statistiques</span>
+												<span>progrès</span>
+											</span>
+										</span>
+                        </strong>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-lg-10">
+                <div class="overflow-hidden">
+                    <p class="lead mb-0 appear-animation" data-appear-animation="maskUp"
+                       data-appear-animation-delay="250">
+                        <span class="alternative-font">L'Institut national de la statistique</span>(arabe : المعهد الوطني للإحصاء) ou INS est un
+                        établissement public tunisien dépendant du ministère du développement et de la coopération
+                        internationale.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-2 appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="450">
+                <a href="#" class="btn btn-modern btn-primary mt-1">CONTACTEZ NOUS</a>
+            </div>
+        </div>
+    </div>
+
+    <section class="section section-default border-0 my-5 appear-animation" data-appear-animation="fadeIn"
+             data-appear-animation-delay="750">
+        <div class="container py-4">
+
+            <div class="row align-items-center">
+                <div class="col-md-6 appear-animation" data-appear-animation="fadeInLeftShorter"
+                     data-appear-animation-delay="1000">
+                    <div class="owl-carousel owl-theme nav-inside mb-0"
+                         data-plugin-options="{'items': 1, 'margin': 10, 'animateOut': 'fadeOut', 'autoplay': true, 'autoplayTimeout': 6000, 'loop': true}">
+                        <div>
+                            <img alt="" class="img-fluid" src="{{ asset('front/img/generic/generic-corporate-3-2-full.jpg') }}">
+                        </div>
+                        <div>
+                            <img alt="" class="img-fluid" src="{{ asset('front/img/generic/generic-corporate-3-3-full.jpg') }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="overflow-hidden mb-2">
+                        <h2 class="text-color-dark font-weight-normal text-5 mb-0 pt-0 mt-0 appear-animation"
+                            data-appear-animation="maskUp" data-appear-animation-delay="1200">Nous <strong
+                                    class="font-weight-extra-bold">Missions</strong></h2>
+                    </div>
+                    <ul class="appear-animation" data-appear-animation="fadeInUpShorter">
+                        <li>organise et exploite les recensements de la population, les enquêtes démographiques, sociales et économiques et publie les différents chiffres de population en Tunisie</li>
+                        <li>produit et publie de nombreux indices et indicateurs de conjoncture économique et assure le suivi et l'analyse de la conjoncture. Il élabore les comptes de la nation selon ses différentes dimensions (nationale et trimestrielle)</li>
+                        <li>organise la documentation statistique nationale en rassemblant les données produites par les structures du système national de la statistique et assure la coopération internationale dans le domaine statistique</li>
+                        <li>assure le secrétariat permanent du Conseil national de la statistique.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+{% endblock %}

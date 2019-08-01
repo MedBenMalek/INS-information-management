@@ -5,7 +5,10 @@ namespace AdministrationBundle\Controller;
 use AdministrationBundle\Entity\post;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Post controller.
@@ -32,6 +35,23 @@ class postController extends Controller
     }
 
     /**
+     * Lists all post entities.
+     *
+     * @Route("/front", name="post_front_index")
+     * @Method("GET")
+     */
+    public function indexPostAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $posts = $em->getRepository('AdministrationBundle:post')->findAll();
+
+        return $this->render('@App/frontPages/listPosts.html.twig', array(
+            'posts' => $posts,
+        ));
+    }
+
+    /**
      * Creates a new post entity.
      *
      * @Route("/new", name="post_new")
@@ -44,11 +64,21 @@ class postController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $logo_new = $post->getLogo();
+            $fileName = md5(uniqid()).'.'.$logo_new->guessExtension();
+            $logo_new->move(
+                $this->getParameter('images_directory') . '/' ,
+                $fileName
+            );
+            $post->setLogo($fileName);
+            $post->setCreatedAt(new \DateTime() );
+            $post->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush();
 
-            return $this->redirectToRoute('post_show', array('id' => $post->getId()));
+            return $this->redirectToRoute('post_index', array('id' => $post->getId()));
         }
 
         return $this->render('post/new.html.twig', array(
@@ -84,11 +114,26 @@ class postController extends Controller
         $deleteForm = $this->createDeleteForm($post);
         $editForm = $this->createForm('AdministrationBundle\Form\postType', $post);
         $editForm->handleRequest($request);
+        $logo = $post->getLogo();
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $logo_new = $post->getLogo();
+            if ($logo_new == null) {
+                $post->setLogo($logo);
+            } else {
+                $fs = new Filesystem();
+                $fs->remove($this->getParameter('images_directory') . '/' ,  $logo);
+                $fileName = md5(uniqid()).'.'.$logo_new->guessExtension();
+                $logo_new->move(
+                    $this->getParameter('images_directory') . '/' ,
+                    $fileName
+                );
+                $post->setLogo($fileName);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('post_show', array('id' => $post->getId()));
+            return $this->redirectToRoute('post_index', array('id' => $post->getId()));
         }
 
         return $this->render('post/edit.html.twig', array(
@@ -107,6 +152,9 @@ class postController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $post = $em->getRepository('AdministrationBundle:post')->find($id);
+        $logo = $post->getLogo();
+        $fs = new Filesystem();
+        $fs->remove($this->getParameter('images_directory') . '/' ,  $logo);
         $em->remove($post);
         $em->flush();
 
@@ -124,8 +172,10 @@ class postController extends Controller
     {
         $form = $this->createDeleteForm($post);
         $form->handleRequest($request);
-
+        $logo = $post->getLogo();
         if ($form->isSubmitted() && $form->isValid()) {
+            $fs = new Filesystem();
+            $fs->remove($this->getParameter('images_directory') . '/' ,  $logo);
             $em = $this->getDoctrine()->getManager();
             $em->remove($post);
             $em->flush();

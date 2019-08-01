@@ -1,0 +1,132 @@
+{% extends('front/base.html.twig') %}
+
+{% block content %}
+    <div class="slider-container light rev_slider_wrapper" style="height: 600px;">
+        <div id="revolutionSlider" class="slider rev_slider" data-version="5.4.8" data-plugin-revolution-slider data-plugin-options="{'delay': 9000, 'gridwidth': 1170, 'gridheight': 600, 'disableProgressBar': 'on', 'responsiveLevels': [4096,1200,992,500], 'parallax': { 'type': 'scroll', 'origo': 'enterpoint', 'speed': 1000, 'levels': [2,3,4,5,6,7,8,9,12,50], 'disable_onmobile': 'on' }, 'navigation' : {'arrows': { 'enable': false }, 'bullets': {'enable': false, 'style': 'bullets-style-2 bullets-color-primary', 'h_align': 'center', 'v_align': 'bottom', 'space': 7, 'v_offset': 70, 'h_offset': 0}}}">
+            <ul>
+                <li data-transition="fade">
+                    <img src="{{ asset('front/img/slides/slide-bg-8.jpg') }}"
+                         alt=""
+                         data-bgposition="center center"
+                         data-bgfit="cover"
+                         data-bgrepeat="no-repeat"
+                         class="rev-slidebg">
+
+                    <div class="tp-caption"
+                         data-x="center" data-hoffset="['-150','-150','-150','-240']"
+                         data-y="center" data-voffset="['-50','-50','-50','-75']"
+                         data-start="1000"
+                         data-transform_in="x:[-300%];opacity:0;s:500;"
+                         data-transform_idle="opacity:0.6;s:500;"><img src="{{ asset('front/img/slides/slide-title-border-light.png') }}" alt=""></div>
+
+                    <div class="tp-caption font-weight-extra-bold text-color-dark negative-ls-2"
+                         data-x="center"
+                         data-y="center" data-voffset="['-50','-50','-50','-5']"
+                         data-start="700"
+                         data-fontsize="['50','50','50','90']"
+                         data-lineheight="['25','25','25','45']"
+                         data-transform_in="y:[-50%];opacity:0;s:500;">INS</div>
+
+                    <div class="tp-caption"
+                         data-x="center" data-hoffset="['150','150','150','240']"
+                         data-y="center" data-voffset="['-50','-50','-50','-75']"
+                         data-start="1000"
+                         data-transform_in="x:[300%];opacity:0;s:500;"
+                         data-transform_idle="opacity:0.6;s:500;"><img src="{{ asset('front/img/slides/slide-title-border-light.png') }}" alt=""></div>
+
+                    <div class="tp-caption font-weight-extra-bold text-color-dark negative-ls-2"
+                         data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:1.5;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
+                         data-x="center"
+                         data-y="center"
+                         data-fontsize="['50','50','50','90']"
+                         data-lineheight="['55','55','55','95']">Institut national de la statistique</div>
+
+                    <div class="tp-caption font-weight-light text-color-dark"
+                         data-frames='[{"from":"opacity:0;","speed":300,"to":"o:1;","delay":2000,"split":"chars","splitdelay":0.05,"ease":"Power2.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
+                         data-x="center"
+                         data-y="center" data-voffset="['40','40','40','80']"
+                         data-fontsize="['18','18','18','50']"
+                         data-lineheight="['20','20','20','55']"
+                         style="color: #c8edff;">l'analyse des statistiques officielles en Tunisie</div>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container py-5 my-4">
+        <div class="row text-center py-3">
+            <div class="col-md-10 mx-md-auto">
+                <h1 class="word-rotator-title font-weight-bold text-8 mb-3 appear-animation" data-appear-animation="fadeInUpShorter">
+                    Porto is
+                    <strong class="inverted">
+									<span class="word-rotator" data-plugin-options="{'delay': 2000, 'animDelay': 300}">
+										<span class="word-rotator-items">
+											<span>incredibly</span>
+											<span>especially</span>
+											<span>extremely</span>
+										</span>
+									</span>
+                    </strong>
+                    beautiful and fully responsive.
+                </h1>
+                <p class="lead appear-animation mb-0" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="300">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce elementum, nulla vel pellentesque consequat, ante nulla hendrerit arcu, ac tincidunt mauris lacus sed leo.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-intro light border border-bottom-0 mb-0">
+        <div class="container">
+
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <p class="font-weight-bold text-color-dark">
+                        envoyer votre demande maintenant au leader de <span class="highlighted-word highlighted-word-animation-1 text-color-primary font-weight-semibold text-5">l'analyse et statistiques</span>
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <div class="get-started text-left text-lg-right">
+                        <a href="#" class="btn btn-primary btn-lg text-3 font-weight-semibold btn-py-2 px-4">Envoyer une demande</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container ">
+        <div class="row pt-5 mt-4">
+            <div class="col">
+                <h2 class="font-weight-normal text-6 mb-4"><strong class="font-weight-extra-bold">Derniers</strong> articles</h2>
+            </div>
+        </div>
+        <div class="row recent-posts pb-5 mb-4">
+            {% for post in posts %}
+            <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
+                <article>
+                    <div class="row">
+                        <div class="col-auto pr-0">
+                            <div class="date">
+                                <span class="day text-color-dark font-weight-extra-bold">{{ post.createdAt|date('d') }}</span>
+                                <span class="month text-1">{{ post.createdAt|date('D') }}</span>
+                            </div>
+                        </div>
+                        <div class="col pl-1">
+                            <h4 class="line-height-3 text-4"><a href="{{ path('post_show', { 'id': post.id }) }}" class="text-dark">{{ post.title }}</a></h4>
+                            <div class="thumb-info-wrapper m-0">
+                                <a href="{{ path('post_show', { 'id': post.id }) }}"><img src="{{ asset('uploads/images/'~post.logo) }}"
+                                                 class="img-fluid" alt=""></a>
+                            </div>
+                            <a href="{{ path('post_show', { 'id': post.id }) }}" class="read-more text-color-dark font-weight-bold text-2">read more <i class="fas fa-chevron-right text-1 ml-1"></i></a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+{% endblock %}

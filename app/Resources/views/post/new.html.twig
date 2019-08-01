@@ -31,11 +31,24 @@
                     </div>
 
                     <div class="form-row">
-
-                        <div class="col-md-12 mb-12">
+                        <div class="col-md-10 mb-10">
                             <br>
                             {{ form_label(form.body, 'Contenu') }}
                             {{ form_widget(form.body, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <br><br>
+                            <h5>Choisir votre photo</h5>
+                            <div class="form-group custom-file">
+                                {{ form_widget(form.logo, {attr: {class: 'custom-file-input file'}}) }}
+                                {{ form_label(form.logo, 'Choisir votre photo', {label_attr: {class: 'custom-file-label'}}) }}
+                            </div>
+                            {{ form_errors(form.logo) }}
+                            {% if post.logo != null %}
+                                <img width="180px" src="{{ asset('/uploads/images/'~post.logo) }}" alt="{{ post.title }}" id="img" class="img-fluid">
+                            {% else %}
+                                <img width="220px" src="" alt="" id="img" class="img-fluid"/>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="row text-center">
@@ -50,4 +63,13 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        jQuery('.file').on('change', function() {
+            document.getElementById('img').src = window.URL.createObjectURL(this.files[0])
+        });
+    </script>
 {% endblock %}

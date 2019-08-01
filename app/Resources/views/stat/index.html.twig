@@ -1,5 +1,5 @@
 {% extends ':parent:base.html.twig' %}
-{% block title %}liste de utilisateurs{% endblock %}
+{% block title %}TABLEAU DE BORD{% endblock %}
 {% block body %}
 <div class="page-wrapper">
     <div class="page-breadcrumb border-bottom">
@@ -49,7 +49,7 @@
                                     <td>{{ s.user }}</td>
                                     <td>{{ s.demandeur }}</td>
                                     <td>
-                                        <a href="{{ path('stat_show', { 'id': s.id }) }}" class="btn btn-sm btn-success">
+                                        <a href="{{ path('chart', { 'id': s.id }) }}" class="btn btn-sm btn-success">
                                             Afficher
                                         </a>
                                         <a href="{{ path('stat_edit', { 'id': s.id }) }}" class="btn btn-sm btn-warning">

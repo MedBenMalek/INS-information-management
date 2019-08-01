@@ -1,159 +1,136 @@
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>
-        Gestion demandeur
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Acceuil</a></li>
-        <li><a href="#">Demande information</a></li>
-        <li class="active">Gestion demandeur</li>
-    </ol>
-</section>
+{% extends ':parent:base.html.twig' %}
+{% block title %}liste de utilisateurs{% endblock %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="page-breadcrumb border-bottom">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
+                <h5 class="font-medium text-uppercase mb-0">List des demandes</h5>
+            </div>
+            <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
+                <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
+                    <ol class="breadcrumb mb-0 justify-content-end p-0">
+                        <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">List des demandes</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="page-content container-fluid">
 
-<section class="content">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="box box-success">
-                <div class="box-header">
-                    <h3 class="box-title">Liste des demandes</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                        <div class="row">
-                            <div class="col-sm-6"></div>
-                            <div class="col-sm-6"></div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-right" style="margin-bottom: 25px">
+                            <a href="{{ path('demande') }}" class="btn btn-success">
+                                <i class="mdi mdi-plus text"></i>
+                                <span class="text">Ajouter demande</span>
+                            </a>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <table id="example2" class="table table-bordered table-hover dataTable" role="grid"
-                                       aria-describedby="example2_info">
-                                    <thead>
-                                    <tr role="row">
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">nom
-                                        </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">Prenom
-                                        </th>
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="Rendering engine: activate to sort column descending">Action
-                                        </th>
-                                    </thead>
-                                    <tbody>
-                                    {% for d in demandeur %}
-                                    <tr role="row" class="even">
-                                        <td>{{ d.firstname }}</td>
-                                        <td>{{ d.lastname }}</td>
-                                        <td>
-                                            <button onclick="submitDemande('{{ path('demandeur_view', { 'id': d.id }) }}')" class="btn btn-sm btn-success">
-                                                Afficher
-                                            </button>
-                                            <button onclick="submitDelete('{{ path('bib_demandeur_delete', { 'id': d.id }) }}')" class="btn btn-sm btn-danger">
-                                                Supprimer
-                                            </button>
-                                        </td>
-                                        {% endfor %}
-                                    </tbody>
-                                    {#<tfoot>#}
-                                    {#<tr><th rowspan="1" colspan="1">Rendering engine</th><th rowspan="1" colspan="1">Browser</th><th rowspan="1" colspan="1">Platform(s)</th><th rowspan="1" colspan="1">Engine version</th><th rowspan="1" colspan="1">CSS grade</th></tr>#}
-                                    {#</tfoot>#}
-                                </table>
+                        <h4 class="card-title">List des demandes</h4>
+                        <div class="row mt-5">
+                            <!-- Column -->
+                            <div class="col-md-6 col-lg-4 col-xlg-4">
+                                <div class="card card-hover">
+                                    <div class="box bg-info text-center">
+                                        <h1 class="font-light text-white">2,064</h1>
+                                        <h6 class="text-white">Total des demandes</h6>
+                                    </div>
+                                </div>
                             </div>
+                            <!-- Column -->
+                            <div class="col-md-6 col-lg-4 col-xlg-4">
+                                <div class="card card-hover">
+                                    <div class="box bg-success text-center">
+                                        <h1 class="font-light text-white">1100</h1>
+                                        <h6 class="text-white">Résoudre</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Column -->
+                            <div class="col-md-6 col-lg-4 col-xlg-4">
+                                <div class="card card-hover">
+                                    <div class="box bg-dark text-center">
+                                        <h1 class="font-light text-white">964</h1>
+                                        <h6 class="text-white">en attendant</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Column -->
+                        </div>
+                        <div class="table-responsive">
+                            <table id="table_default" class="table table-striped border">
+                                <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Nom</th>
+                                    <th>Prenom</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for d in demandeur %}
+                                <tr role="row" class="even">
+                                    <td><span class="badge badge-warning">In Progress</span></td>
+                                    <td>{{ d.firstname }}</td>
+                                    <td>{{ d.lastname }}</td>
+                                    <td>
+                                        <button onclick="submitDemande('{{ path('demandeur_view', { 'id': d.id }) }}')" class="btn btn-sm btn-success">
+                                            Afficher
+                                        </button>
+                                        <button onclick="deleteObj('{{ path('bib_demandeur_delete', { 'id': d.id }) }}','{{ d.firstname }} {{ d.lastname }}')" class="btn btn-sm btn-danger">
+                                            Supprimer
+                                        </button>
+                                    </td>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
                         </div>
                     </div>
                 </div>
-                <!-- /.box-body -->
             </div>
-            <!-- /.box -->
         </div>
-        <!-- /.col -->
+        <div class="row" id="central"></div>
     </div>
-    <!-- /.row -->
-    <div id="detaildemandeur">
+</div>
+    {% endblock %}
 
-    </div>
-</section>
-
-{% block js %}
+{% block javascripts %}
     <script>
-        $(function () {
-            $('#example2').DataTable({
-                "pageLength": 5,
-                'paging': true,
-                'lengthChange': false,
-                'searching': true,
-                'ordering': true,
-                'info': true,
-                'autoWidth': true,
-                "language": {
-                    "sEmptyTable": "Aucune donnée disponible dans le tableau",
-                    "sInfo": "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
-                    "sInfoEmpty": "Affichage de l'élément 0 à 0 sur 0 élément",
-                    "sInfoFiltered": "(filtré à partir de _MAX_ éléments au total)",
-                    "sInfoPostFix": "",
-                    "sInfoThousands": ",",
-                    "sLengthMenu": "Afficher _MENU_ éléments",
-                    "sLoadingRecords": "Chargement...",
-                    "sProcessing": "Traitement...",
-                    "sSearch": "Rechercher :",
-                    "sZeroRecords": "Aucun élément correspondant trouvé",
-                    "oPaginate": {
-                        "sFirst": "Premier",
-                        "sLast": "Dernier",
-                        "sNext": "Suivant",
-                        "sPrevious": "Précédent"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": activer pour trier la colonne par ordre croissant",
-                        "sSortDescending": ": activer pour trier la colonne par ordre décroissant"
-                    },
-                    "select": {
-                        "rows": {
-                            "_": "%d lignes sélectionnées",
-                            "0": "Aucune ligne sélectionnée",
-                            "1": "1 ligne sélectionnée"
+        function deleteObj(path, name) {
+            swal({
+                title: 'Êtes-vous sûr?',
+                text: 'supprimer la demande de ' + name + ". Vous ne pourrez pas revenir en arrière!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Oui, supprimer',
+                cancelButtonText: 'Annuler!',
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: path,
+                        type: 'POST',
+                        dataType: 'html',
+                        success: function (code_html, statut) {
+                        },
+                        error: function (resultat, statut, erreur) {
+                        },
+                        complete: function (resultat, statut) {
+                            location.reload();
                         }
-                    }
+                    });
+                    swal(
+                        'Supprimé avec succès',
+                        'La demande de ' + name + ' a été supprimé.',
+                        'success'
+                    )
                 }
             })
-        });
-
-        function submitDemande(path) {
-            $("#detaildemandeur").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
-            $.ajax({
-                url: path,
-                type: 'POST',
-                dataType: 'html',
-                success: function (code_html, statut) {
-                    $("#detaildemandeur").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
-                },
-                error: function (resultat, statut, erreur) {
-                },
-
-                complete: function (resultat, statut) {
-                }
-            });
-        }
-
-        function submitDelete(path) {
-            $("#central").html('<center><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b></center>');
-            $.ajax({
-                url: path,
-                type: 'POST',
-                dataType: 'html',
-                success: function (code_html, statut) {
-                    $("#central").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
-                },
-                error: function (resultat, statut, erreur) {
-                },
-
-                complete: function (resultat, statut) {
-                }
-            });
         }
     </script>
 {% endblock %}
+

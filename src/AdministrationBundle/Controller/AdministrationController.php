@@ -26,14 +26,14 @@ class AdministrationController extends Controller
     }
 
     /**
-     * @Route("bib/demandeur", name="bib_demandeur")
+     * @Route("bib/demandeur", name="rechercher_demandeur")
      */
     public function demandeurAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $demandeur = $em->getRepository('AdministrationBundle:seekersBib')->findAll();
 
-        return $this->render('@Administration/agentBib/demandeur.html.twig', ['demandeur' => $demandeur]);
+        return $this->render('@Administration/agentBib/rechercheDemande.html.twig', ['demandeur' => $demandeur]);
 
     }
 

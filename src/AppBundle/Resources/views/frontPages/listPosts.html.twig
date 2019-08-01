@@ -1,0 +1,80 @@
+{% extends('front/base.html.twig') %}
+
+{% block content %}
+
+    <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-12 align-self-center p-static order-2 text-center">
+
+                    <h1 class="text-dark font-weight-bold text-8">List des actualités</h1>
+                </div>
+
+                <div class="col-md-12 align-self-center order-1">
+
+                    <ul class="breadcrumb d-block text-center">
+                        <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                        <li class="active">Actualités</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container py-4">
+
+        <div class="row">
+            <div class="col">
+                <div class="blog-posts">
+                    <div class="row">
+                        {% for post in posts %}
+                        <div class="col-md-4">
+                            <article class="post post-medium border-0 pb-0 mb-5">
+                                <div class="post-image">
+                                    <a href="{{ path('post_show', { 'id': post.id }) }}">
+                                        <img src="{{ asset('uploads/images/'~post.logo) }}"
+                                             class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0"
+                                             alt=""/>
+                                    </a>
+                                </div>
+
+                                <div class="post-content">
+
+                                    <h2 class="font-weight-semibold text-5 line-height-6 mt-3 mb-2"><a
+                                                href="{{ path('post_show', { 'id': post.id }) }}">{{ post.title }}</a></h2>
+
+                                    <div class="post-meta">
+                                        <span><i class="far fa-user"></i> Par <a href="#">{{ post.user.username }}</a> </span>
+                                        <span class="d-block mt-2"><a href="{{ path('post_show', { 'id': post.id }) }}"
+                                                                      class="btn btn-xs btn-light text-1 text-uppercase">Read More</a></span>
+                                    </div>
+
+                                </div>
+                            </article>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <ul class="pagination float-right">
+                                <li class="page-item"><a class="page-link" href="#"><i
+                                                class="fas fa-angle-left"></i></a></li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <a class="page-link" href="#"><i class="fas fa-angle-right"></i></a>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+{% endblock %}

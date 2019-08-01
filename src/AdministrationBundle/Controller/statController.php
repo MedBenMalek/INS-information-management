@@ -160,7 +160,7 @@ class statController extends Controller
                 $em->flush();
             }
 
-            return $this->redirectToRoute('chart', array('id' => $chart->getId()));
+            return $this->redirectToRoute('chart', array('id' => $stat->getId()));
         }
 
         return $this->render('@Administration/agentBib/newChart.html.twig', array(
@@ -179,31 +179,44 @@ class statController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $chart = $em->getRepository('AdministrationBundle:cart')->find($id);
-        $chartdata = $em->getRepository('AdministrationBundle:chartdata')->findBy(['chart' => $chart]);
+        $stat = $em->getRepository('AdministrationBundle:stat')->find($id);
+        $chart = $em->getRepository('AdministrationBundle:cart')->findBy(['stat' => $stat]);
 
-        // Chart
+        $obj = array();
 
-        $ob = new Highchart();
-        $ob->chart->renderTo('chartrun');  // The #id of the div where to render the chart
-        $ob->title->text('Chart Title');
-        $ob->plotOptions->pie(array(
-            'allowPointSelect'  => true,
-            'cursor'    => 'pointer',
-            'dataLabels'    => array('enabled' => false),
-            'showInLegend'  => true
-        ));
-        $data = array();
+        foreach ($chart as $char) {
 
-        foreach ($chartdata as $c) {
-            array_push($data, [ $c->getCle() , intval($c->getValue()) ]);
+            $chartdata = $em->getRepository('AdministrationBundle:chartdata')->findBy(['chart' => $char]);
+
+            // Chart
+            $ob = new Highchart();
+            $ob->chart->renderTo('chartrun'.$char->getId());  // The #id of the div where to render the chart
+            $ob->title->text($char->getTitle());
+            $ob->plotOptions->pie(array(
+                'allowPointSelect'  => false,
+                'cursor'    => 'pointer',
+                'dataLabels'    => array('enabled' => true),
+                'showInLegend'  => true
+            ));
+            $data = array();
+
+            foreach ($chartdata as $c) {
+                array_push($data, [ $c->getCle() , intval($c->getValue()) ]);
+            }
+
+            $ob->series(array(array('type' => 'pie','name' => 'Browser share', 'data' => $data)));
+
+            array_push($obj, [
+                "ob" => $ob,
+                "id" => $char->getId(),
+            ]);
         }
 
 
-        $ob->series(array(array('type' => 'pie','name' => 'Browser share', 'data' => $data)));
 
         return $this->render('@Administration/agentBib/chart.html.twig', array(
-            'chart' => $ob
+            'charts' => $obj,
+            'stat' => $stat,
         ));
     }
 

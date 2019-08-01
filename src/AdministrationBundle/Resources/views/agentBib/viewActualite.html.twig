@@ -1,59 +1,73 @@
-{% extends '@Administration/Default/index_administration.html.twig' %}
-{% block contenu %}
-<section class="content-header">
-    <h1>
-        Gerer les actualites
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Acceuil</a></li>
-    </ol>
+{% extends('front/base.html.twig') %}
 
+{% block content %}
 
-</section>
+    <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+        <div class="container">
+            <div class="row">
 
-<section class="content">
-    <div class="row">
-        <div class="col-md-12">
-        <!-- Box Comment -->
-        <div class="box box-success">
-            <div class="box-header">
-                <div class="row">
-                    <div class="col-md-11">
-                        <h3 class="box-title">{{ post.title }}</h3>
-                    </div>
-                    <div class="col-md-1">
+                <div class="col-md-12 align-self-center p-static order-2 text-center">
 
-                        <a class="btn btn-sm btn-danger"  href="{{ path('deletePost', { 'id': post.id }) }}) }}"> Supprimer</a>
-                    </div>
+                    <h1 class="text-dark font-weight-bold text-8">{{ post.title }}</h1>
                 </div>
 
-            </div>
-            <div class="box-header with-border">
-                <div class="user-block">
-                    <img class="img-circle" src="{{ asset('Ipi/dist/img/user7-128x128.jpg') }}" alt="User Image">
-                    <span class="username"><a href="#">user</a></span>
-                    <span class="description">date</span>
+                <div class="col-md-12 align-self-center order-1">
+
+                    <ul class="breadcrumb d-block text-center">
+                        <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                        <li class="active">Actualités</li>
+                    </ul>
                 </div>
-                <!-- /.user-block -->
             </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <!-- post text -->
-
-                <p>{{ post.body }}</p>
-
-                <!-- Attachment -->
-                <div class="attachment-block clearfix">
-                    <img class="attachment-img" src="{{ asset('Ipi/dist/img/photo1.png') }}" alt="Attachment Image">
-                </div>
-                <!-- /.attachment-block -->
-
-            </div>
-            <!-- /.box-body -->
-
         </div>
-        <!-- /.box -->
+    </section>
+
+    <div class="container py-4">
+
+        <div class="row">
+            <div class="col">
+                <div class="blog-posts single-post">
+
+                    <article class="post post-large blog-single-post border-0 m-0 p-0">
+                        <div class="post-image ml-0">
+                                <img src="{{ asset('uploads/images/'~post.logo) }}"
+                                     class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt=""/>
+                        </div>
+
+                        <div class="post-date ml-0">
+                            <span class="day">{{ post.createdAt|date("d") }}</span>
+                            <span class="month">{{ post.createdAt|date("D") }}</span>
+                        </div>
+
+                        <div class="post-content ml-0">
+
+                            <div class="post-meta">
+                                <span><i class="far fa-user"></i> Par <span style="color: #0088cc" >{{ post.user.username }}</span> </span>
+                            </div>
+
+                            {{ post.body|raw }}
+
+
+                            <div class="post-block mt-4 pt-2 post-author">
+                                <h4 class="mb-3">Auteur(e)</h4>
+                                <div class="img-thumbnail img-thumbnail-no-borders d-block pb-3">
+                                        <img src="{{ asset('front/img/avatars/avatar.jpg') }}" alt="">
+                                </div>
+                                <p><strong class="name"><a class="text-4 pb-2 pt-2 d-block">John
+                                            Doe</a></strong></p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio,
+                                    gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et,
+                                    interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim ornare
+                                    nisi, vitae mattis nulla ante id dui. </p>
+                            </div>
+
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </div>
+
     </div>
-    </div>
-</section>
+
 {% endblock %}

@@ -1,0 +1,173 @@
+{% extends ':parent:base.html.twig' %}
+{% block title %}rechercher la liste des demandes{% endblock %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="page-breadcrumb border-bottom">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
+                <h5 class="font-medium text-uppercase mb-0">rechercher la liste des demandes</h5>
+            </div>
+            <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
+                <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
+                    <ol class="breadcrumb mb-0 justify-content-end p-0">
+                        <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">rechercher la liste des demandes</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="page-content container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="material-card card">
+                    <div class="card-body text-center">
+                        <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap text-center">
+                            <div class="form-group" style="margin-left: 650px">
+                                <div class="input-group text-center">
+                                    <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                                        <span>
+                                          <i class="fa fa-calendar"></i> Sélectionnez la plage de dates
+                                        </span>
+                                        <i class="fa fa-caret-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="central"></div>
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+    <script type="text/javascript" src="{{ asset('Ipi/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('Ipi/plugins/moment/min/moment.min.js') }}"></script>
+    <script>
+        function table() {
+            $('#example2').DataTable({
+                "pageLength": 15,
+                'paging': true,
+                'lengthChange': false,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true,
+                "language": {
+                    "sEmptyTable": "Aucune donnée disponible dans le tableau",
+                    "sInfo": "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+                    "sInfoEmpty": "Affichage de l'élément 0 à 0 sur 0 élément",
+                    "sInfoFiltered": "(filtré à partir de _MAX_ éléments au total)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ",",
+                    "sLengthMenu": "Afficher _MENU_ éléments",
+                    "sLoadingRecords": "Chargement...",
+                    "sProcessing": "Traitement...",
+                    "sSearch": "Rechercher :",
+                    "sZeroRecords": "Aucun élément correspondant trouvé",
+                    "oPaginate": {
+                        "sFirst": "Premier",
+                        "sLast": "Dernier",
+                        "sNext": "Suivant",
+                        "sPrevious": "Précédent"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                        "sSortDescending": ": activer pour trier la colonne par ordre décroissant"
+                    },
+                    "select": {
+                        "rows": {
+                            "_": "%d lignes sélectionnées",
+                            "0": "Aucune ligne sélectionnée",
+                            "1": "1 ligne sélectionnée"
+                        }
+                    }
+                }
+            })
+        };
+
+        function submitDemande() {
+            $("#adddemande").html('<center><br/><br/><img src="{{ asset('Ipi/dist/img/ajax-loader.gif') }}" ><br><b>Patientez...</b><br/><br/></center>');
+            $.ajax({
+                url: '{{ path('demande_new') }}',
+                type: 'POST',
+                dataType: 'html',
+                success: function (code_html, statut) {
+                    $("#adddemande").html(code_html); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
+                },
+                error: function (resultat, statut, erreur) {
+                },
+
+                complete: function (resultat, statut) {
+                }
+            });
+        }
+
+        function submitDemandeDate(start, end) {
+            $('#central').html(`
+                <div class="col-12 text-center" style="margin-top: 100px">
+                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+               `);
+            $.ajax({
+                url: '{{ path('bib_demandeur_date') }}',
+                type: 'POST',
+                data: {
+                    start : start,
+                    end: end
+                },
+                //dataType: 'html',
+                success: function (code_html, statut) {
+                    $("#central").html(`
+                    <div class="col-12">
+                        <div class="material-card card">
+                            <div class="card-body">
+                                ` + code_html + `
+                            </div>
+                        </div>
+                    </div>
+                    `);
+                    table();
+                },
+                error: function (resultat, statut, erreur) {
+                },
+
+                complete: function (resultat, statut) {
+                }
+            });
+        }
+
+
+        let start1,end1;
+        //Date range as a button
+        $('#daterange-btn').daterangepicker(
+            {
+                ranges   : {
+                    'Aujourd\'hui'       : [moment(), moment()],
+                    'Hier'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    '7 derniers jours' : [moment().subtract(6, 'days'), moment()],
+                    '30 derniers jours': [moment().subtract(29, 'days'), moment()],
+                    'Ce mois-ci'  : [moment().startOf('month'), moment().endOf('month')],
+                    'Le mois dernier'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                startDate: moment().subtract(29, 'days'),
+                endDate  : moment()
+            },
+            function (start, end) {
+                $('#daterange-btn span').html(start.format('MM D, YYYY') + ' - ' + end.format('MM D, YYYY'));
+                submitDemandeDate(start.format('YYYYMMDD'), end.format('YYYYMMDD'))
+            },
+
+        )
+
+    </script>
+{% endblock %}

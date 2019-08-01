@@ -35,7 +35,9 @@
                                     <thead>
                                     <tr>
                                         <th>Titre</th>
-                                        <th>Contenu</th>
+                                        <th>Auteur(e)</th>
+                                        <th>image</th>
+                                        <th>création</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -43,7 +45,9 @@
                                     {% for post in posts %}
                                     <tr>
                                         <td>{{ post.title }}</td>
-                                        <td>{{ post.body }}</td>
+                                        <td>{{ post.user.username }}</td>
+                                        <td><img width="100px" src="{{ asset('uploads/images/'~post.logo) }}" alt="{{ post.title }}" id="img" class="img-fluid"></td>
+                                        <td>{{ post.createdAt|date }}</td>
                                         <td>
                                             <a href="{{ path('post_show', { 'id': post.id }) }}" class="btn btn-sm btn-info">
                                                 Afficher
@@ -51,9 +55,9 @@
                                             <a href="{{ path('post_edit', { 'id': post.id }) }}" class="btn btn-sm btn-warning">
                                                 Modifier
                                             </a>
-                                            <a href="{{ path('deletePost', { 'id': post.id }) }}" class="btn btn-sm btn-danger">
+                                            <button onclick="deleteObj('{{ path('deletePost', { 'id': post.id }) }}','{{ post.title }}')" class="btn btn-sm btn-danger">
                                                 Supprimer
-                                            </a>
+                                            </button>
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -71,43 +75,10 @@
 
 {% block javascripts %}
     <script>
-        function showUser(path) {
-
-            $('#central').html(`
-                <div class="col-12 text-center" style="margin-top: 100px">
-                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                      <span class="sr-only">Loading...</span>
-                    </div>
-                </div>
-               `);
-
-            $.ajax({
-                url: path,
-                type: 'POST',
-                dataType: 'html',
-                success: function (code_html, statut) {
-                    $("#central").html(`
-                    <div class="col-12">
-                    <div class="material-card card">
-                        <div class="card-body">
-                            ` + code_html + `
-                        </div>
-                    </div>
-                </div>
-                    `);
-                },
-                error: function (resultat, statut, erreur) {
-                },
-
-                complete: function (resultat, statut) {
-                }
-            });
-        }
-
-        function DeleteUser(path, name) {
+        function deleteObj(path, name) {
             swal({
                 title: 'Êtes-vous sûr?',
-                text: 'supprimer l\'utilisateur ' + name + ". Vous ne pourrez pas revenir en arrière!",
+                text: 'supprimer l\'actualité ' + name + ". Vous ne pourrez pas revenir en arrière!",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#DD6B55',
@@ -129,7 +100,7 @@
                     });
                     swal(
                         'Supprimé avec succès',
-                        'L\'utilisateur  ' + name + ' a été supprimé.',
+                        'L\'actualité de ' + name + ' a été supprimé.',
                         'success'
                     )
                 }

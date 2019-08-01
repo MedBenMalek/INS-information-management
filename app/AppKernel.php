@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new AdministrationBundle\AdministrationBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Ob\HighchartsBundle\ObHighchartsBundle(),
+            new FOS\CKEditorBundle\FOSCKEditorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

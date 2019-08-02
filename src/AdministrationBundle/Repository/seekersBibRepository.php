@@ -10,4 +10,5 @@ namespace AdministrationBundle\Repository;
  */
 class seekersBibRepository extends \Doctrine\ORM\EntityRepository
 {
+
 }

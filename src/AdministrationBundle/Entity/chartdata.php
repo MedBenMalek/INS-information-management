@@ -37,7 +37,7 @@ class chartdata
 
     /**
      * @ORM\ManyToOne(targetEntity="AdministrationBundle\Entity\cart", inversedBy="chart")
-     * @ORM\JoinColumn(name="chart_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="chart_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $chart;
 

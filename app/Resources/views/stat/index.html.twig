@@ -47,7 +47,7 @@
                                 <tr role="row" class="even">
                                     <td>{{ s.title }}</td>
                                     <td>{{ s.user }}</td>
-                                    <td>{{ s.demandeur }}</td>
+                                    <td> {{ s.demandeur.firstname }} {{ s.demandeur.lastname }}</td>
                                     <td>
                                         <a href="{{ path('chart', { 'id': s.id }) }}" class="btn btn-sm btn-success">
                                             Afficher
@@ -56,8 +56,39 @@
                                             Modifier
                                         </a>
                                         <a href="{{ path('stat_new_chart', { 'id': s.id }) }}" class="btn btn-sm btn-primary">
-                                            Ajouter statistique
+                                            Ajouter chart
                                         </a>
+                                        <button data-toggle="modal" data-target="#tooltipmodals" class="btn btn-sm btn-info">
+                                            Changer status
+                                        </button>
+                                        <div id="tooltipmodals" class="modal" tabindex="-1" role="dialog" aria-labelledby="tooltipmodel" style="display: none;" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="tooltipmodel">chnager le status pour le demandeur {{ s.demandeur.firstname }} {{ s.demandeur.lastname }}</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h5>changer status</h5>
+                                                        <select name="status{{ s.id }}" id="status{{ s.id }}" class="form-control">
+                                                            <option value="waiting">en attente</option>
+                                                            <option value="inProgress">en cours</option>
+                                                            <option value="completed">terminé</option>
+                                                        </select>
+                                                        <br>
+                                                        <button onclick="status('{{ path('stat_status_demande', { 'id': s.demandeur.id }) }}', {{ s.id }})" type="button" class="btn btn-success" >Valider</button>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                                <!-- /.modal-content -->
+                                            </div>
+                                            <!-- /.modal-dialog -->
+                                        </div>
+                                        <button onclick="deleteObj('{{ path('deleteStat', { 'id': s.id }) }}','{{ s.title }}')" class="btn btn-sm btn-danger">
+                                            Supprimer
+                                        </button>
                                     </td>
                                     {% endfor %}
                                 </tbody>
@@ -71,4 +102,57 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function deleteObj(path, name) {
+            swal({
+                title: 'Êtes-vous sûr?',
+                text: 'supprimer le statestique ' + name + ". Vous ne pourrez pas revenir en arrière!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Oui, supprimer',
+                cancelButtonText: 'Annuler!',
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: path,
+                        type: 'POST',
+                        dataType: 'html',
+                        success: function (code_html, statut) {
+                        },
+                        error: function (resultat, statut, erreur) {
+                        },
+                        complete: function (resultat, statut) {
+                            location.reload();
+                        }
+                    });
+                    swal(
+                        'Supprimé avec succès',
+                        'Le statestiquee ' + name + ' a été supprimé.',
+                        'success'
+                    )
+                }
+            })
+        }
+
+        function status(path, id){
+            stat = $('#status'+id).val()
+
+            $.ajax({
+                type: "POST",
+                url: path,
+                cache: false,
+                data: { "statu": stat },
+                success: function () {
+
+                } ,
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error : ' + errorThrown);
+                }
+            });
+        }
+    </script>
 {% endblock %}

@@ -1,5 +1,5 @@
 {% extends ':parent:base.html.twig' %}
-{% block title %}liste de utilisateurs{% endblock %}
+{% block title %}List des demandes{% endblock %}
 {% block body %}
 <div class="page-wrapper">
     <div class="page-breadcrumb border-bottom">
@@ -35,7 +35,7 @@
                             <div class="col-md-6 col-lg-4 col-xlg-4">
                                 <div class="card card-hover">
                                     <div class="box bg-info text-center">
-                                        <h1 class="font-light text-white">2,064</h1>
+                                        <h1 class="font-light text-white">{{ demandeur|length  }}</h1>
                                         <h6 class="text-white">Total des demandes</h6>
                                     </div>
                                 </div>
@@ -44,7 +44,7 @@
                             <div class="col-md-6 col-lg-4 col-xlg-4">
                                 <div class="card card-hover">
                                     <div class="box bg-success text-center">
-                                        <h1 class="font-light text-white">1100</h1>
+                                        <h1 class="font-light text-white">{{ demandeurDone|length  }}</h1>
                                         <h6 class="text-white">Résoudre</h6>
                                     </div>
                                 </div>
@@ -53,8 +53,8 @@
                             <div class="col-md-6 col-lg-4 col-xlg-4">
                                 <div class="card card-hover">
                                     <div class="box bg-dark text-center">
-                                        <h1 class="font-light text-white">964</h1>
-                                        <h6 class="text-white">en attendant</h6>
+                                        <h1 class="font-light text-white">{{ demandeurPrgress|length  }}</h1>
+                                        <h6 class="text-white">en cours</h6>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,13 @@
                                 <tbody>
                                 {% for d in demandeur %}
                                 <tr role="row" class="even">
-                                    <td><span class="badge badge-warning">In Progress</span></td>
+                                    {% if d.status == 'waiting' %}
+                                        <td><span class="badge badge-danger">en attendant</span></td>
+                                    {% elseif d.status == 'in progress' %}
+                                        <td><span class="badge badge-warning">en cours</span></td>
+                                    {% else %}
+                                        <td><span class="badge badge-success">Achevée</span></td>
+                                    {% endif %}
                                     <td>{{ d.firstname }}</td>
                                     <td>{{ d.lastname }}</td>
                                     <td>

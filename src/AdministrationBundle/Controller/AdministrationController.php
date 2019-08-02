@@ -93,8 +93,12 @@ class AdministrationController extends Controller
     public function demandeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+
         $demandeur = $em->getRepository('AdministrationBundle:seekersBib')->findAll();
-        return $this->render('@Administration/agentBib/demande.html.twig', ['demandeur' => $demandeur]);
+        $demandeurDone = $em->getRepository('AdministrationBundle:seekersBib')->findBy([ 'status' => "complete" ]);
+        $demandeurPrgress = $em->getRepository('AdministrationBundle:seekersBib')->findBy([ 'status' => "in progress" ]);
+
+        return $this->render('@Administration/agentBib/demande.html.twig', ['demandeur' => $demandeur,'demandeurDone' => $demandeurDone,'demandeurPrgress' => $demandeurPrgress,]);
 
     }
 

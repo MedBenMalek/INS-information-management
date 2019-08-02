@@ -38,7 +38,7 @@ class cart
 
     /**
      * @ORM\ManyToOne(targetEntity="AdministrationBundle\Entity\stat", inversedBy="stat")
-     * @ORM\JoinColumn(name="stat_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="stat_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $stat;
 

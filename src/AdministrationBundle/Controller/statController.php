@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 use Ob\HighchartsBundle\Highcharts\Highchart;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Knp\Bundle\SnappyBundle\Snappy\Response\JpegResponse;
 
 /**
  * Stat controller.
@@ -36,6 +38,30 @@ class statController extends Controller
     }
 
     /**
+     * Lists all stat entities.
+     *
+     * @Route("/status/{id}", name="stat_status_demande")
+     * @Method({"GET", "POST"})
+     */
+    public function statusAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $demande = $em->getRepository('AdministrationBundle:seekersBib')->find($id);
+
+        $status = $request->request->get('statu');
+
+        if($status == "waiting")
+            $demande->setStatus("waiting");
+        elseif ($status == "inProgress")
+            $demande->setStatus("in progress");
+        else
+            $demande->setStatus("completed");
+
+        return $this->redirectToRoute('bib_demande');
+    }
+
+    /**
      * Creates a new stat entity.
      *
      * @Route("/new", name="stat_new")
@@ -53,7 +79,7 @@ class statController extends Controller
             $em->persist($stat);
             $em->flush();
 
-            return $this->redirectToRoute('stat_show', array('id' => $stat->getId()));
+            return $this->redirectToRoute('stat_new_chart', array('id' => $stat->getId()));
         }
 
         return $this->render('stat/new.html.twig', array(
@@ -101,6 +127,22 @@ class statController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
+    }
+
+    /**
+     * @Route("/delete/{id}", name="deleteStat")
+     */
+    public function statDeleteAction(Request $request, $id)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $stat = $em->getRepository('AdministrationBundle:stat')->find($id);
+        $em->remove($stat);
+        $em->flush();
+
+        return $this->redirectToRoute('stat_index');
+
     }
 
     /**
@@ -212,12 +254,64 @@ class statController extends Controller
             ]);
         }
 
-
-
         return $this->render('@Administration/agentBib/chart.html.twig', array(
             'charts' => $obj,
             'stat' => $stat,
         ));
+    }
+
+    /**
+     * Lists all stat entities.
+     *
+     * @Route("/pdf/{id}", name="stat_pdf")
+     * @Method({"GET","POST"})
+     */
+    public function PDFAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $stat = $em->getRepository('AdministrationBundle:stat')->find($id);
+        $chart = $em->getRepository('AdministrationBundle:cart')->findBy(['stat' => $stat]);
+
+        $obj = array();
+
+        foreach ($chart as $char) {
+
+            $chartdata = $em->getRepository('AdministrationBundle:chartdata')->findBy(['chart' => $char]);
+
+            // Chart
+            $ob = new Highchart();
+            $ob->chart->renderTo('chartrun'.$char->getId());  // The #id of the div where to render the chart
+            $ob->title->text($char->getTitle());
+            $ob->plotOptions->pie(array(
+                'allowPointSelect'  => false,
+                'cursor'    => 'pointer',
+                'dataLabels'    => array('enabled' => true),
+                'showInLegend'  => true
+            ));
+            $data = array();
+
+            foreach ($chartdata as $c) {
+                array_push($data, [ $c->getCle() , intval($c->getValue()) ]);
+            }
+
+            $ob->series(array(array('type' => 'pie','name' => 'Browser share', 'data' => $data)));
+
+            array_push($obj, [
+                "ob" => $ob,
+                "id" => $char->getId(),
+            ]);
+        }
+
+        $html = $this->renderView('@Administration/agentBib/chart.html.twig', array(
+            'charts' => $obj,
+            'stat'  => $stat
+        ));
+
+        return new JpegResponse(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            'file.pdf'
+        );
+
     }
 
     /**

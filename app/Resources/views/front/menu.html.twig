@@ -18,29 +18,30 @@
                                 <nav class="collapse">
                                     <ul class="nav nav-pills" id="mainNav">
                                         <li>
-                                            <a class="nav-link active" href="{{ path('homepage') }}">
+                                            <a class="nav-link {{ app.request.get('_route') == 'homepage' ? 'active' }}" href="{{ path('homepage') }}">
                                                 Accueil
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="nav-link" href="{{ path('about') }}">
+                                            <a class="nav-link {{ app.request.get('_route') == 'about' ? 'active' }}" href="{{ path('about') }}">
                                                 À propos de nous
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="nav-link" href="{{ path('post_front_index') }}">
+                                            <a class="nav-link {{ app.request.get('_route') == 'post_front_index' ? 'active' }}" href="{{ path('post_front_index') }}">
                                                 Actualités
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="nav-link" href="{{ path('contact') }}">
+                                            <a class="nav-link {{ app.request.get('_route') == 'contact' ? 'active' }}" href="{{ path('contact') }}">
                                                 Contactez nous
                                             </a>
                                         </li>
                                     </ul>
                                 </nav>
                             </div>
-                            <a href="{{ path('demande') }}" class="btn btn-xl btn-outline btn-rounded btn-primary text-1 ml-3 font-weight-bold text-uppercase">Envoyer une demande</a>
+                            <a href="{{ path('demande') }}" class="btn btn-xl btn-outline btn-rounded btn-primary text-1 ml-3 font-weight-bold text-uppercase {{ app.request.get('_route') == 'demande' ? 'active' }}">Envoyer une demande</a>
+                            <a href="{{ path('fos_user_security_login') }}" class="btn btn-xl btn-outline btn-rounded btn-info text-1 ml-3 font-weight-bold text-uppercase">Login</a>
                             <button class="btn header-btn-collapse-nav" data-toggle="collapse" data-target=".header-nav-main nav">
                                 <i class="fas fa-bars"></i>
                             </button>

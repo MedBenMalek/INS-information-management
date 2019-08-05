@@ -7,7 +7,9 @@ use AdministrationBundle\Entity\cart;
 use AdministrationBundle\Entity\chartdata;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Ob\HighchartsBundle\Highcharts\Highchart;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -40,25 +42,28 @@ class statController extends Controller
     /**
      * Lists all stat entities.
      *
-     * @Route("/status/{id}", name="stat_status_demande")
+     * @Route("/status", name="stat_status_demande")
      * @Method({"GET", "POST"})
      */
-    public function statusAction(Request $request, $id)
+    public function statusAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $demande = $em->getRepository('AdministrationBundle:seekersBib')->find($id);
+        $demande = $em->getRepository('AdministrationBundle:seekersBib')->findOneBy(['id' =>$request->request->get('id')]);
 
         $status = $request->request->get('statu');
 
-        if($status == "waiting")
+        if ($status == "waiting") {
             $demande->setStatus("waiting");
-        elseif ($status == "inProgress")
+        } elseif ($status == "inProgress") {
             $demande->setStatus("in progress");
-        else
+        } else {
             $demande->setStatus("completed");
+        }
 
-        return $this->redirectToRoute('bib_demande');
+        $em->flush();
+
+        return new JsonResponse("succès");
     }
 
     /**

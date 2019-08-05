@@ -35,17 +35,17 @@
                     <div class="p-lg-3 p-2">
                         <div class="d-flex align-items-center">
                             <button class="btn btn-circle btn-danger text-white btn-lg" href="javascript:void(0)">
-                                <i class="ti-clipboard"></i>
+                                <i class="ti-agenda"></i>
                             </button>
                             <div class="ml-4" style="width: 38%;">
-                                <h4 class="font-light">Total Projects</h4>
+                                <h4 class="font-light">nombre des actualités</h4>
                                 <div class="progress">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 40%"
-                                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{ posts|length  }}%"
+                                         aria-valuenow="{{ posts|length  }}" aria-valuemin="0" aria-valuemax="0"></div>
                                 </div>
                             </div>
                             <div class="ml-auto">
-                                <h2 class="display-7 mb-0">23</h2>
+                                <h2 class="display-7 mb-0">{{ posts|length  }}</h2>
                             </div>
                         </div>
                     </div>
@@ -54,17 +54,17 @@
                     <div class="p-lg-3 p-2">
                         <div class="d-flex align-items-center">
                             <button class="btn btn-circle btn-cyan text-white btn-lg" href="javascript:void(0)">
-                                <i class="ti-wallet"></i>
+                                <i class="ti-receipt    "></i>
                             </button>
                             <div class="ml-4" style="width: 38%;">
-                                <h4 class="font-light">Total Earnings</h4>
+                                <h4 class="font-light">nombre des demandes</h4>
                                 <div class="progress">
-                                    <div class="progress-bar bg-cyan" role="progressbar" style="width: 40%"
-                                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
+                                    <div class="progress-bar bg-cyan" role="progressbar" style="width: {{ demandeur|length  }}%"
+                                         aria-valuenow="{{ demandeur|length  }}" aria-valuemin="0" aria-valuemax="40"></div>
                                 </div>
                             </div>
                             <div class="ml-auto">
-                                <h2 class="display-7 mb-0">76</h2>
+                                <h2 class="display-7 mb-0">{{ demandeur|length  }}</h2>
                             </div>
                         </div>
                     </div>
@@ -73,17 +73,17 @@
                     <div class="p-lg-3 p-2">
                         <div class="d-flex align-items-center">
                             <button class="btn btn-circle btn-warning text-white btn-lg" href="javascript:void(0)">
-                                <i class="fas fa-dollar-sign"></i>
+                                <i class="fas fa-newspaper"></i>
                             </button>
                             <div class="ml-4" style="width: 38%;">
-                                <h4 class="font-light">Total Earnings</h4>
+                                <h4 class="font-light">nombre des abonnées dans Newsletter</h4>
                                 <div class="progress">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
-                                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{ news|length  }}%"
+                                         aria-valuenow="{{ news|length  }}" aria-valuemin="0" aria-valuemax="40"></div>
                                 </div>
                             </div>
                             <div class="ml-auto">
-                                <h2 class="display-7 mb-0">83</h2>
+                                <h2 class="display-7 mb-0">{{ news|length  }}</h2>
                             </div>
                         </div>
                     </div>

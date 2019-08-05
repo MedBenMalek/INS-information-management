@@ -6,6 +6,8 @@ use AdministrationBundle\Entity\seekersBib;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Welp\MailchimpBundle\Event\SubscriberEvent;
+use Welp\MailchimpBundle\Subscriber\Subscriber;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
@@ -22,7 +24,14 @@ class AdministrationController extends Controller
      */
     public function loginAction(Request $request)
     {
-            return $this->render('@Administration/Default/index_administration.html.twig');
+
+        $em = $this->getDoctrine()->getManager();
+        $demandeur = $em->getRepository('AdministrationBundle:seekersBib')->findAll();
+        $posts = $em->getRepository('AdministrationBundle:post')->findAll();
+        $news = $em->getRepository('AdministrationBundle:newsletter')->findAll();
+
+
+        return $this->render('@Administration/Default/index_administration.html.twig', ['demandeur' => $demandeur,'posts' => $posts,'news' => $news]);
     }
 
     /**
@@ -95,7 +104,7 @@ class AdministrationController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $demandeur = $em->getRepository('AdministrationBundle:seekersBib')->findAll();
-        $demandeurDone = $em->getRepository('AdministrationBundle:seekersBib')->findBy([ 'status' => "complete" ]);
+        $demandeurDone = $em->getRepository('AdministrationBundle:seekersBib')->findBy([ 'status' => "completed" ]);
         $demandeurPrgress = $em->getRepository('AdministrationBundle:seekersBib')->findBy([ 'status' => "in progress" ]);
 
         return $this->render('@Administration/agentBib/demande.html.twig', ['demandeur' => $demandeur,'demandeurDone' => $demandeurDone,'demandeurPrgress' => $demandeurPrgress,]);

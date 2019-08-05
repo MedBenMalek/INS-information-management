@@ -67,7 +67,66 @@
     <div role="main" class="main">
         {% block content %}{% endblock %}
     </div>
-    {% include('front/footer.html.twig') %}
+
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-ribbon"><span>Get in Touch</span></div>
+            <div class="row py-5 my-4">
+                <div class="col-md-6 col-lg-7 mb-4 mb-lg-0"><h5 class="text-3 mb-3">NEWSLETTER</h5>
+                    <p class="pr-1">Suivez l'évolution de nos fonctionnalités et de notre technologie en constante
+                        évolution. Entrez votre adresse e-mail et inscrivez-vous à notre newsletter.</p>
+                    <div id="success"></div>
+                    <div class="input-group input-group-rounded">
+                        <input class="form-control form-control-sm bg-light"
+                               placeholder="Email Address"
+                               name="newsletterEmail"
+                               id="newsletterEmail"
+                               type="text">
+                        <span class="input-group-append">
+                            <button class="btn btn-light text-color-dark" onclick="newsletter('{{ path('newsletter_new') }}')"><strong>GO!</strong></button>
+                        </span>
+                    </div>
+
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4 mb-md-0">
+                    <div class="contact-details"><h5 class="text-3 mb-3">CONTACT US</h5>
+                        <ul class="list list-icons list-icons-lg">
+                            <li class="mb-1"><i class="far fa-dot-circle text-color-primary"></i>
+                                <p class="m-0">234 Street Name, City Name</p></li>
+                            <li class="mb-1"><i class="fab fa-whatsapp text-color-primary"></i>
+                                <p class="m-0"><a href="tel:8001234567">(800) 123-4567</a></p></li>
+                            <li class="mb-1"><i class="far fa-envelope text-color-primary"></i>
+                                <p class="m-0"><a href="mailto:mail@example.com">mail@example.com</a></p></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-2"><h5 class="text-3 mb-3">FOLLOW US</h5>
+                    <ul class="social-icons">
+                        <li class="social-icons-facebook"><a href="http://www.facebook.com/" target="_blank"
+                                                             title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                        <li class="social-icons-twitter"><a href="http://www.twitter.com/" target="_blank"
+                                                            title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                        <li class="social-icons-linkedin"><a href="http://www.linkedin.com/" target="_blank"
+                                                             title="Linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container py-2">
+                <div class="row py-4">
+                    <div class="col-lg-9 d-flex align-items-center justify-content-center justify-content-lg-start mb-2 mb-lg-0">
+                        <a href="index.html" class="logo pr-0 pr-lg-3"> <img alt="Porto Website Template"
+                                                                             src="{{ asset('Ipi/dist/img/logob1.png') }}"
+                                                                             class="opacity-5"
+                            > </a></div>
+                    <div class="col-lg-3 d-flex align-items-center justify-content-center justify-content-lg-start mb-4 mb-lg-0">
+                        <p>© Copyright 2018. All Rights Reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 </div>
 
 <!-- Vendor -->
@@ -75,7 +134,7 @@
 <script src="{{ asset('front/vendor/jquery.appear/jquery.appear.min.js') }}"></script>
 <script src="{{ asset('front/vendor/jquery.easing/jquery.easing.min.js') }}"></script>
 <script src="{{ asset('front/vendor/jquery.cookie/jquery.cookie.min.js') }}"></script>
-<script src="{{ asset('front/master/style-switcher/style.switcher.js') }}" id="styleSwitcherScript" data-base-path="" data-skin-src=""></script>
+
 <script src="{{ asset('front/vendor/popper/umd/popper.min.js') }}"></script>
 <script src="{{ asset('front/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('front/vendor/common/common.min.js') }}"></script>
@@ -103,82 +162,38 @@
 <!-- Theme Initialization Files -->
 <script src="{{ asset('front/js/theme.init.js') }}"></script>
 
-
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhpYHdYRY2U6V_VfyyNtkPHhywLjDkhfg"></script>
 <script>
 
-    /*
-    Map Settings
+    function validateEmail(email) {
+        let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"  ]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
 
-        Find the Latitude and Longitude of your address:
-            - https://www.latlong.net/
-            - http://www.findlatitudeandlongitude.com/find-address-from-latitude-and-longitude/
+    function newsletter(path) {
+        let email = $("#newsletterEmail").val();
 
-    */
 
-    // Map Markers
-    var mapMarkers = [{
-        address: "New York, NY 10017",
-        html: "<strong>New York Office</strong><br>New York, NY 10017",
-        icon: {
-            image: "img/pin.png",
-            iconsize: [26, 46],
-            iconanchor: [12, 46]
-        },
-        popup: true
-    }];
 
-    // Map Initial Location
-    var initLatitude = 40.75198;
-    var initLongitude = -73.96978;
+        if (validateEmail(email)){
+            $.ajax({
+                type: "POST",
+                url: "{{ path('newsletter_new') }}",
+                cache: false,
+                data: {"email": email},
+                success: function (data) {
+                    $('#success').html('' +
+                        '<p style="color: #4fd989">'+data+'</p>')
+                },
+            });
+        }else {
+            $('#success').html('' +
+                '<p style="color: #ee3535">email n\'est pas valid</p>')
+        }
 
-    // Map Extended Settings
-    var mapSettings = {
-        controls: {
-            draggable: (($.browser.mobile) ? false : true),
-            panControl: true,
-            zoomControl: true,
-            mapTypeControl: true,
-            scaleControl: true,
-            streetViewControl: true,
-            overviewMapControl: true
-        },
-        scrollwheel: false,
-        markers: mapMarkers,
-        latitude: initLatitude,
-        longitude: initLongitude,
-        zoom: 11
-    };
 
-    var map = $('#googlemaps').gMap(mapSettings);
-
-    // Map text-center At
-    var mapCenterAt = function (options, e) {
-        e.preventDefault();
-        $('#googlemaps').gMap("centerAt", options);
     }
 
 </script>
-
-
-<script>
-    (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '../../../www.google-analytics.com/analytics.js', 'ga');
-
-    ga('create', 'UA-42715764-5', 'auto');
-    ga('send', 'pageview');
-</script>
-<script src="{{ asset('front/master/analytics/analytics.js') }}"></script>
 
 </body>
 

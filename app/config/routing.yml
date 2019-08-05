@@ -1,3 +1,11 @@
+administration_newsletter:
+    resource: "@AdministrationBundle/Controller/newsletterController.php"
+    type:     annotation
+
+administration_newsletter:
+    resource: "@AdministrationBundle/Controller/newsletterController.php"
+    type:     annotation
+
 administration_stat:
     resource: "@AdministrationBundle/Controller/statController.php"
     type:     annotation

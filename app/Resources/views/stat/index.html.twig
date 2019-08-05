@@ -70,13 +70,13 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <h5>changer status</h5>
-                                                        <select name="status{{ s.id }}" id="status{{ s.id }}" class="form-control">
+                                                        <select name="status" id="stat_{{ s.id }}" class="form-control">
                                                             <option value="waiting">en attente</option>
                                                             <option value="inProgress">en cours</option>
                                                             <option value="completed">terminé</option>
                                                         </select>
                                                         <br>
-                                                        <button onclick="status('{{ path('stat_status_demande', { 'id': s.demandeur.id }) }}', {{ s.id }})" type="button" class="btn btn-success" >Valider</button>
+                                                        <button onclick="status('{{ path('stat_status_demande', { 'id': s.demandeur.id }) }}', {{ s.demandeur.id }})" type="button" class="btn btn-success" >Valider</button>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
@@ -139,14 +139,18 @@
         }
 
         function status(path, id){
-            stat = $('#status'+id).val()
+            let stat = $('#stat_'+id+'').val();
+
+            let sss= stat;
 
             $.ajax({
                 type: "POST",
-                url: path,
+                url: "{{ path('stat_status_demande') }}",
                 cache: false,
-                data: { "statu": stat },
-                success: function () {
+                data: { "statu": stat, "id" : id },
+                success: function (data) {
+
+                    alert(data)
 
                 } ,
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -154,5 +158,7 @@
                 }
             });
         }
+
+
     </script>
 {% endblock %}
